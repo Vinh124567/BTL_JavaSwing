@@ -103,6 +103,35 @@ public class Room_Controller extends ConnectDB {
         }
         return false; // Trả về false nếu xóa không thành công
     }
+    
+    public boolean updateRoom(Room room) {
+    Connection conn = getConnection();
+    if (conn != null) {
+        String query = "UPDATE phong SET  loaiphong = ?, mota = ?, trangthai = ?, tang = ? WHERE maphong = ?";
+        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+            // Thiết lập giá trị tham số cho câu lệnh SQL
+            psmt.setInt(1, room.getLoaiPhong());
+            psmt.setString(2, room.getMoTa());
+            psmt.setString(3, room.getTrangThai());
+            psmt.setInt(4, room.getTang());
+            psmt.setString(5, room.getMaPhong());
+            int rowsUpdated = psmt.executeUpdate(); // Thực thi truy vấn cập nhật
+
+            // Kiểm tra xem có bao nhiêu dòng đã được cập nhật
+            if (rowsUpdated > 0) {
+                System.out.println("Room updated successfully.");
+                return true; // Trả về true nếu cập nhật thành công
+            } else {
+                System.out.println("Room not found or failed to update.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while updating room: " + e.getMessage());
+        }
+    } else {
+        System.out.println("Failed to establish connection to the database.");
+    }
+    return false; // Trả về false nếu cập nhật không thành công
+}
 
 
     

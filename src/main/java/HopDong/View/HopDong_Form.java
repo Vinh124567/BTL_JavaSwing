@@ -11,6 +11,7 @@ import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -41,11 +42,18 @@ public class HopDong_Form extends javax.swing.JFrame {
     
     public HopDong_Form(Room room) {
         initComponents();
+        
+        Calendar currentDate = Calendar.getInstance();
+        dteNgayki.setCalendar(currentDate);
+//        Date ngayki = dteNgayki.getDate();
+        
         this.room = room;
         setLocationRelativeTo(null);
         roomHasContract(room);
         DefaultTableModel model = (DefaultTableModel) tblDichvu.getModel();
             model.setRowCount(0);
+            
+            
             
            for (DichVu c : serviceList) {
             Object[] rowData = {c.getId(), c.getTengoi(), c.getGia(),c.getMota()};
@@ -151,6 +159,8 @@ public class HopDong_Form extends javax.swing.JFrame {
         txtLoaiphong.setEditable(false);
 
         txtTenphong.setEditable(false);
+
+        txtTang.setEditable(false);
 
         jLabel4.setText("SDT");
 
@@ -505,6 +515,10 @@ public class HopDong_Form extends javax.swing.JFrame {
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         if(checkEmpty()){
             HopDong hopdong=getDataForm();
+            if(hopdong==null){
+                 JOptionPane.showMessageDialog(this, "Lỗi", "Thông báo", JOptionPane.ERROR_MESSAGE);
+                 return;
+            }else{
             if(kiemTraTrungMaHopDong(hopdong.getMaHopDong(), danhSachHopDong)==false){
             boolean isSuccess = hopdongctrl.addHopDong(hopdong,room.getMaPhong());
             if(isSuccess){
@@ -519,6 +533,7 @@ public class HopDong_Form extends javax.swing.JFrame {
             }else {
                  JOptionPane.showMessageDialog(this, "Mã hợp đồng đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
+                }
         }
     }//GEN-LAST:event_btnThemActionPerformed
     
@@ -629,6 +644,9 @@ public class HopDong_Form extends javax.swing.JFrame {
             if (dialogResult == JOptionPane.YES_OPTION) {
                 if(room.getMahopdong() != null){
                     hopdongctrl.deleteHopDong(txtMahopdong.getText());
+                    Home_Form a=new Home_Form();
+                a.setVisible(true);
+                this.dispose();
                 }
             } 
     }//GEN-LAST:event_btnKetthucActionPerformed
@@ -695,30 +713,37 @@ public class HopDong_Form extends javax.swing.JFrame {
     return false; // Không tìm thấy mã phòng trong danh sách
 }
     
-    public HopDong getDataForm(){
-        String mahopdong=txtMahopdong.getText().toString();
-        String tenkhachhang=txtTenkhachhang.getText().toString();
-        
-        Date ngaysinh = dteNgaysinh.getDate();
-        
-        String sdt=txtSdt.getText().toString();
-        String cccd=txtCccd.getText().toString();
-        String email=txtEmail.getText().toString();
-        String diachi=txtDiachi.getText().toString();
-        int tiencoc=Integer.parseInt(txtTiencoc.getText().toString());
-        
-        Date ngayki = dteNgayki.getDate();
-        Date ngayhethan = dteNgayhethan.getDate();
-        
-        int giadien=Integer.parseInt(txtGiadien.getText().toString());
-        int gianuoc=Integer.parseInt(txtGianuoc.getText().toString());
-        String selected=cboDichvu.getSelectedItem().toString();
-        String madichvu=DichVuMap.get(selected);
-       
-        HopDong hopdong=new HopDong(mahopdong,tenkhachhang,ngaysinh,gioitinh,sdt,email,diachi,
-        tiencoc,ngayki,ngayhethan,trangthai,giadien,gianuoc,madichvu,cccd);
-        return hopdong;
+    public  HopDong getDataForm() {
+    String mahopdong = txtMahopdong.getText().toString();
+    String tenkhachhang = txtTenkhachhang.getText().toString();
+
+    Date ngaysinh = dteNgaysinh.getDate();
+
+    String sdt = txtSdt.getText().toString();
+    String cccd = txtCccd.getText().toString();
+    String email = txtEmail.getText().toString();
+    String diachi = txtDiachi.getText().toString();
+    int tiencoc = Integer.parseInt(txtTiencoc.getText().toString());
+
+    Date ngayki = dteNgayki.getDate();
+    Date ngayhethan = dteNgayhethan.getDate();
+
+    int giadien = Integer.parseInt(txtGiadien.getText().toString());
+    int gianuoc = Integer.parseInt(txtGianuoc.getText().toString());
+    String selected = cboDichvu.getSelectedItem().toString();
+    String madichvu = DichVuMap.get(selected);
+
+    // Kiểm tra nếu ngày kí lớn hơn hoặc bằng ngày hết hạn
+    if (ngayki.compareTo(ngayhethan) >= 0) {
+        JOptionPane.showMessageDialog(null, "Ngày kí phải trước ngày hết hạn", "Lỗi", JOptionPane.ERROR_MESSAGE);
+        return null; // Trả về null nếu có lỗi
     }
+
+    HopDong hopdong = new HopDong(mahopdong, tenkhachhang, ngaysinh, gioitinh, sdt, email, diachi,
+            tiencoc, ngayki, ngayhethan, trangthai, giadien, gianuoc, madichvu, cccd);
+    return hopdong;
+}
+
     
     public void roomHasContract(Room room){
         if(room.getMahopdong()!= null){

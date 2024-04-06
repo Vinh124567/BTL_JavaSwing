@@ -32,6 +32,16 @@ public class Room {
         this.tang = tang;
     }
 
+    public Room(String maPhong, String mahopdong, int loaiPhong, String moTa, String trangThai, int tang) {
+        this.maPhong = maPhong;
+        this.mahopdong = mahopdong;
+        this.loaiPhong = loaiPhong;
+        this.moTa = moTa;
+        this.trangThai = trangThai;
+        this.tang = tang;
+    }
+    
+
    
     
     

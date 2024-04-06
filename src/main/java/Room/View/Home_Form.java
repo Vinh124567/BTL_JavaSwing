@@ -91,7 +91,7 @@ private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFr
     JPopupMenu popupMenu = new JPopupMenu();
 
     // Tạo các tùy chọn
-    JMenuItem viewRoomInfoItem = new JMenuItem("Xem thông tin phòng");
+    JMenuItem viewRoomInfoItem = new JMenuItem("Xem thông tin");
     JMenuItem createContractItem = new JMenuItem("Tạo hợp đồng");
     JMenuItem deleteRoom = new JMenuItem("Xóa");
 
@@ -175,10 +175,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         jLabel6 = new javax.swing.JLabel();
         txtTenphong = new javax.swing.JTextField();
         btnLammoi = new javax.swing.JButton();
-        jPanel4 = new javax.swing.JPanel();
-        jPanel5 = new javax.swing.JPanel();
-        jPanel6 = new javax.swing.JPanel();
-        jPanel7 = new javax.swing.JPanel();
+        btnDanhsachphong = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -211,7 +208,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
                 .addComponent(jRadioButton1)
                 .addGap(18, 18, 18)
                 .addComponent(jRadioButton2)
-                .addContainerGap(84, Short.MAX_VALUE))
+                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Thêm phòng"));
@@ -302,6 +299,13 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
                 .addGap(43, 43, 43))
         );
 
+        btnDanhsachphong.setText("Danh sách phòng");
+        btnDanhsachphong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDanhsachphongActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout jPanel3Layout = new javax.swing.GroupLayout(jPanel3);
         jPanel3.setLayout(jPanel3Layout);
         jPanel3Layout.setHorizontalGroup(
@@ -312,75 +316,30 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addComponent(btnDanhsachphong, javax.swing.GroupLayout.PREFERRED_SIZE, 211, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 27, Short.MAX_VALUE)))
                 .addContainerGap())
         );
         jPanel3Layout.setVerticalGroup(
             jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel3Layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(jPanel3Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                    .addComponent(productPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(jPanel3Layout.createSequentialGroup()
-                        .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addContainerGap()
+                        .addComponent(productPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel3Layout.createSequentialGroup()
+                        .addGap(16, 16, 16)
+                        .addComponent(btnDanhsachphong, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                        .addGap(18, 18, 18)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                         .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap())
         );
 
         jTabbedPane1.addTab("Quản lý phòng", jPanel3);
-
-        javax.swing.GroupLayout jPanel4Layout = new javax.swing.GroupLayout(jPanel4);
-        jPanel4.setLayout(jPanel4Layout);
-        jPanel4Layout.setHorizontalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel4Layout.setVerticalGroup(
-            jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Hợp đồng", jPanel4);
-
-        javax.swing.GroupLayout jPanel5Layout = new javax.swing.GroupLayout(jPanel5);
-        jPanel5.setLayout(jPanel5Layout);
-        jPanel5Layout.setHorizontalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel5Layout.setVerticalGroup(
-            jPanel5Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Gói dịch vụ", jPanel5);
-
-        javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
-        jPanel6.setLayout(jPanel6Layout);
-        jPanel6Layout.setHorizontalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel6Layout.setVerticalGroup(
-            jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Hóa đơn", jPanel6);
-
-        javax.swing.GroupLayout jPanel7Layout = new javax.swing.GroupLayout(jPanel7);
-        jPanel7.setLayout(jPanel7Layout);
-        jPanel7Layout.setHorizontalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 850, Short.MAX_VALUE)
-        );
-        jPanel7Layout.setVerticalGroup(
-            jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 556, Short.MAX_VALUE)
-        );
-
-        jTabbedPane1.addTab("Loại phòng", jPanel7);
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -398,6 +357,13 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
+        productPanel.removeAll();
+        displayProductData();
+        productPanel.revalidate();
+        productPanel.repaint();
+    }//GEN-LAST:event_btnLammoiActionPerformed
+
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
         String name = txtTenphong.getText().toString();
         String selected = cboLoai.getSelectedItem().toString();
@@ -406,9 +372,9 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         String mota = txtMota.getText().toString();
         String trangthai = cboTrangthai.getSelectedItem().toString();
         if (name.isEmpty() || mota.isEmpty()) {
-        JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
-        return; // Nếu có trường nào rỗng thì dừng lại và không thêm phòng mới
-    }
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return; // Nếu có trường nào rỗng thì dừng lại và không thêm phòng mới
+        }
         // Kiểm tra xem phòng có tồn tại trong danh sách không
         if (kiemTraTrungMaPhong(name, rooms)==false) {
             Room a = new Room(name, loai, mota, trangthai, tang);
@@ -425,12 +391,11 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         }
     }//GEN-LAST:event_btnThemActionPerformed
 
-    private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
-        productPanel.removeAll();
-        displayProductData();
-         productPanel.revalidate();
-            productPanel.repaint();
-    }//GEN-LAST:event_btnLammoiActionPerformed
+    private void btnDanhsachphongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDanhsachphongActionPerformed
+         ListRoom_Form listroom_Form = new ListRoom_Form();
+         listroom_Form.setVisible(true);
+         this.dispose();
+    }//GEN-LAST:event_btnDanhsachphongActionPerformed
     
     public void loadData(){
                 productPanel.removeAll();
@@ -475,6 +440,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnDanhsachphong;
     private javax.swing.JButton btnLammoi;
     private javax.swing.JButton btnThem;
     private javax.swing.ButtonGroup buttonGroup1;
@@ -489,10 +455,6 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JPanel jPanel4;
-    private javax.swing.JPanel jPanel5;
-    private javax.swing.JPanel jPanel6;
-    private javax.swing.JPanel jPanel7;
     private javax.swing.JRadioButton jRadioButton1;
     private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTabbedPane jTabbedPane1;

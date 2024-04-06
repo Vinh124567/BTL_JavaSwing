@@ -53,6 +53,33 @@ public class LoaiPhong_Controller  extends ConnectDB {
         return loaiPhongMap;
     }
      
+      public Map<Integer,String > getLoaiPhongData1() {
+        Map<Integer,String> loaiPhongMap = new HashMap<>();
+        java.sql.Connection conn = getConnection();
+        if (conn != null) {
+            try {
+                String sql = "SELECT * FROM loaiphong";
+                PreparedStatement statement = conn.prepareStatement(sql);
+                ResultSet resultSet = statement.executeQuery();
+
+                while (resultSet.next()) {
+                    int id = resultSet.getInt("id");
+                    String tenLoaiPhong = resultSet.getString("name");
+                    loaiPhongMap.put(id,tenLoaiPhong);
+                }
+            } catch (SQLException e) {
+                e.printStackTrace();
+            } finally {
+                try {
+                    conn.close();
+                } catch (SQLException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+        return loaiPhongMap;
+    }
+     
     public LoaiPhong getGiaPhong(String maPhong) {
          LoaiPhong a=new LoaiPhong();
     Connection conn = getConnection();
