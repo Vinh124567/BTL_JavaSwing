@@ -6,6 +6,7 @@ package HopDong.Controller;
 
 import Database.ConnectDB;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,29 +15,28 @@ import javax.swing.table.DefaultTableModel;
 import model.HopDong;
 import model.Room;
 
-/**
- *
- * @author vinhp
- */
+
 public class HopDong_Controller  extends ConnectDB{
     
-    public boolean addHopDong(HopDong hopdong) {
+public boolean addHopDong(HopDong hopdong,String maphong) {
     Connection conn = getConnection();
     if (conn != null) {
         String query = "INSERT INTO hopdong(mahopdong, tenkhachhang,ngaysinh,gioitinh,sdt, email,diachi,tiencoc,ngayki,ngayhethan,trangthai,giadien,gianuoc,madichvu,cccd) "
                      + "VALUES (?, ?, ?, ?, ?, ?, ?,?,?,?,?,?,?,?,?)";
-        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+          String updatePhongQuery = "UPDATE phong SET mahopdong = ? WHERE maphong = ?";
+        try (PreparedStatement psmt = conn.prepareStatement(query);
+                 PreparedStatement updatePhongPsmt = conn.prepareStatement(updatePhongQuery);) {
             // Thiết lập các tham số cho câu lệnh INSERT
             psmt.setString(1, hopdong.getMaHopDong());
             psmt.setString(2, hopdong.getTenKhachHang());
-            psmt.setString(3, hopdong.getNgaySinh()); // Chuyển đổi từ java.util.Date sang java.sql.Date
+            psmt.setDate(3, new java.sql.Date(hopdong.getNgaySinh().getTime())); // Chuyển đổi từ java.util.Date sang java.sql.Date
             psmt.setString(4, hopdong.getGioiTinh());
             psmt.setString(5, hopdong.getSdt());
             psmt.setString(6, hopdong.getEmail());
             psmt.setString(7, hopdong.getDiaChi());
             psmt.setInt(8, hopdong.getTienCoc());
-            psmt.setString(9, hopdong.getNgayKi());
-            psmt.setString(10, hopdong.getNgayHetHan());
+            psmt.setDate(9, new java.sql.Date(hopdong.getNgayKi().getTime())); // Chuyển đổi ngày ki từ java.util.Date sang java.sql.Date
+            psmt.setDate(10, new java.sql.Date(hopdong.getNgayHetHan().getTime())); // Chuyển đổi ngày hết hạn từ java.util.Date sang java.sql.Date
             psmt.setString(11, hopdong.getTrangThai());
             psmt.setInt(12, hopdong.getGiaDien());
             psmt.setInt(13, hopdong.getGiaNuoc());
@@ -47,6 +47,9 @@ public class HopDong_Controller  extends ConnectDB{
             int rowsInserted = psmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Tạo hợp đồng thành công.");
+                 updatePhongPsmt.setString(1, hopdong.getMaHopDong());
+                 updatePhongPsmt.setString(2, maphong);
+                  int rowsUpdatedPhong = updatePhongPsmt.executeUpdate();
                 return true; // Trả về true nếu thêm thành công
             } else {
                 System.out.println("Tạo thất bạt.");
@@ -96,14 +99,14 @@ public class HopDong_Controller  extends ConnectDB{
                     HopDong hopdong = new HopDong();
                     hopdong.setMaHopDong(rs.getString("mahopdong"));
                     hopdong.setTenKhachHang(rs.getString("tenkhachhang"));
-                    hopdong.setNgaySinh(rs.getString("ngaysinh"));
+                    hopdong.setNgaySinh(rs.getDate("ngaysinh"));
                     hopdong.setGioiTinh(rs.getString("gioitinh"));
                     hopdong.setSdt(rs.getString("sdt"));
                     hopdong.setEmail(rs.getString("email"));
                     hopdong.setDiaChi(rs.getString("diachi"));
                     hopdong.setTienCoc(rs.getInt("tiencoc"));
-                    hopdong.setNgayKi(rs.getString("ngayki"));
-                    hopdong.setNgayHetHan(rs.getString("ngayhethan"));
+                    hopdong.setNgayKi(rs.getDate("ngayki"));
+                    hopdong.setNgayHetHan(rs.getDate("ngayhethan"));
                     hopdong.setTrangThai(rs.getString("trangthai"));
                     hopdong.setGiaDien(rs.getInt("giadien"));
                     hopdong.setGiaNuoc(rs.getInt("gianuoc"));

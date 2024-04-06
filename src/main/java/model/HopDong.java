@@ -4,21 +4,23 @@
  */
 package model;
 
+import java.util.Date;
+
 /**
  *
  * @author vinhp
  */
 public class HopDong {
+    private java.util.Date ngayKi;
+    private java.util.Date ngayHetHan;
     private String maHopDong;
     private String tenKhachHang;
-    private String ngaySinh;
+    private java.util.Date ngaysinh;
     private String gioiTinh;
     private String sdt;
     private String email;
     private String diaChi;
     private int tienCoc;
-    private String ngayKi;
-    private String ngayHetHan;
     private String trangThai;
     private int giaDien;
     private int giaNuoc;
@@ -33,9 +35,7 @@ public class HopDong {
         this.tenKhachHang = tenKhachHang;
     }
 
-    public void setNgaySinh(String ngaySinh) {
-        this.ngaySinh = ngaySinh;
-    }
+
 
     public void setGioiTinh(String gioiTinh) {
         this.gioiTinh = gioiTinh;
@@ -53,18 +53,13 @@ public class HopDong {
         this.diaChi = diaChi;
     }
 
-
     public void setTienCoc(int tienCoc) {
         this.tienCoc = tienCoc;
     }
 
-    public void setNgayKi(String ngayKi) {
-        this.ngayKi = ngayKi;
-    }
+    
 
-    public void setNgayHetHan(String ngayHetHan) {
-        this.ngayHetHan = ngayHetHan;
-    }
+    
 
     public void setTrangThai(String trangThai) {
         this.trangThai = trangThai;
@@ -94,8 +89,12 @@ public class HopDong {
         return tenKhachHang;
     }
 
-    public String getNgaySinh() {
-        return ngaySinh;
+     public void setNgaySinh(java.util.Date ngayKi) {
+        this.ngaysinh = ngaysinh;
+    }
+
+    public java.util.Date getNgaySinh() {
+        return ngaysinh;
     }
 
     public String getGioiTinh() {
@@ -114,17 +113,24 @@ public class HopDong {
         return diaChi;
     }
 
-
     public int getTienCoc() {
         return tienCoc;
     }
 
-    public String getNgayKi() {
+   public java.util.Date getNgayKi() {
         return ngayKi;
     }
 
-    public String getNgayHetHan() {
+    public void setNgayKi(java.util.Date ngayKi) {
+        this.ngayKi = ngayKi;
+    }
+
+    public java.util.Date getNgayHetHan() {
         return ngayHetHan;
+    }
+
+    public void setNgayHetHan(java.util.Date ngayHetHan) {
+        this.ngayHetHan = ngayHetHan;
     }
 
     public String getTrangThai() {
@@ -150,10 +156,12 @@ public class HopDong {
     public HopDong() {
     }
 
-    public HopDong(String maHopDong, String tenKhachHang, String ngaySinh, String gioiTinh, String sdt, String email, String diaChi, int tienCoc, String ngayKi, String ngayHetHan, String trangThai, int giaDien, int giaNuoc, String maDichVu, String cccd) {
+    
+    
+    public HopDong(String maHopDong, String tenKhachHang, Date ngaySinh, String gioiTinh, String sdt, String email, String diaChi, int tienCoc, Date ngayKi, Date ngayHetHan, String trangThai, int giaDien, int giaNuoc, String maDichVu, String cccd) {
         this.maHopDong = maHopDong;
         this.tenKhachHang = tenKhachHang;
-        this.ngaySinh = ngaySinh;
+        this.ngaysinh = ngaySinh;
         this.gioiTinh = gioiTinh;
         this.sdt = sdt;
         this.email = email;
@@ -167,4 +175,6 @@ public class HopDong {
         this.maDichVu = maDichVu;
         this.cccd = cccd;
     }
+
+    
 }

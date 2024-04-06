@@ -10,6 +10,8 @@ import Room.View.Home_Form;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import javax.swing.JOptionPane;
@@ -76,7 +78,6 @@ public class HopDong_Form extends javax.swing.JFrame {
         jLabel3 = new javax.swing.JLabel();
         rdoNam = new javax.swing.JRadioButton();
         rdoNu = new javax.swing.JRadioButton();
-        txtNgaysinh = new javax.swing.JTextField();
         txtTenkhachhang = new javax.swing.JTextField();
         txtMahopdong = new javax.swing.JTextField();
         txtSdt = new javax.swing.JTextField();
@@ -99,9 +100,7 @@ public class HopDong_Form extends javax.swing.JFrame {
         jLabel13 = new javax.swing.JLabel();
         txtTiencoc = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
-        txtNgayki = new javax.swing.JTextField();
         jLabel15 = new javax.swing.JLabel();
-        txtNgayhethan = new javax.swing.JTextField();
         jLabel16 = new javax.swing.JLabel();
         rdoConhan = new javax.swing.JRadioButton();
         rdoHethan = new javax.swing.JRadioButton();
@@ -113,7 +112,9 @@ public class HopDong_Form extends javax.swing.JFrame {
         cboDichvu = new javax.swing.JComboBox<>();
         jLabel19 = new javax.swing.JLabel();
         btnKetthuc = new javax.swing.JButton();
-        jDateChooser1 = new com.toedter.calendar.JDateChooser();
+        dteNgayki = new com.toedter.calendar.JDateChooser();
+        dteNgayhethan = new com.toedter.calendar.JDateChooser();
+        dteNgaysinh = new com.toedter.calendar.JDateChooser();
         jPanel2 = new javax.swing.JPanel();
         jPanel3 = new javax.swing.JPanel();
         jScrollPane1 = new javax.swing.JScrollPane();
@@ -181,9 +182,19 @@ public class HopDong_Form extends javax.swing.JFrame {
 
         buttonGroup2.add(rdoConhan);
         rdoConhan.setText("Còn hạn");
+        rdoConhan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoConhanActionPerformed(evt);
+            }
+        });
 
         buttonGroup2.add(rdoHethan);
         rdoHethan.setText("Hết hạn");
+        rdoHethan.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                rdoHethanActionPerformed(evt);
+            }
+        });
 
         btnThem.setText("Tạo Hợp Đồng");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -218,11 +229,6 @@ public class HopDong_Form extends javax.swing.JFrame {
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                        .addContainerGap()
-                        .addComponent(jLabel2)
-                        .addGap(18, 18, 18)
-                        .addComponent(txtTenkhachhang))
-                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 65, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -245,30 +251,29 @@ public class HopDong_Form extends javax.swing.JFrame {
                                     .addComponent(jLabel14, javax.swing.GroupLayout.PREFERRED_SIZE, 43, javax.swing.GroupLayout.PREFERRED_SIZE)
                                     .addComponent(jLabel15)
                                     .addComponent(jLabel16))
+                                .addGap(31, 31, 31)
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addGroup(jPanel1Layout.createSequentialGroup()
-                                        .addGap(31, 31, 31)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                            .addComponent(txtTenphong, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtLoaiphong, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addComponent(txtEmail, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                                .addGap(1, 1, 1)
-                                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                                    .addComponent(txtNgaysinh)
-                                                    .addComponent(txtSdt)))
-                                            .addComponent(txtDiachi, javax.swing.GroupLayout.Alignment.LEADING)
-                                            .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
-                                                .addComponent(txtTang, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                                .addGap(0, 0, Short.MAX_VALUE))))
+                                    .addComponent(txtTenphong)
+                                    .addComponent(txtLoaiphong)
+                                    .addComponent(txtEmail)
                                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
-                                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                            .addComponent(txtNgayhethan, javax.swing.GroupLayout.Alignment.TRAILING, javax.swing.GroupLayout.DEFAULT_SIZE, 251, Short.MAX_VALUE)
-                                            .addComponent(txtNgayki, javax.swing.GroupLayout.Alignment.TRAILING)))))
+                                        .addGap(1, 1, 1)
+                                        .addComponent(txtSdt))
+                                    .addComponent(txtDiachi)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addComponent(txtTang, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addGap(0, 0, Short.MAX_VALUE))
+                                    .addComponent(dteNgayki, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
                             .addGroup(jPanel1Layout.createSequentialGroup()
                                 .addGap(0, 0, Short.MAX_VALUE)
-                                .addComponent(txtTiencoc, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE)))))
+                                .addComponent(txtTiencoc, javax.swing.GroupLayout.PREFERRED_SIZE, 249, javax.swing.GroupLayout.PREFERRED_SIZE))))
+                    .addGroup(javax.swing.GroupLayout.Alignment.LEADING, jPanel1Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(jLabel2)
+                        .addGap(18, 18, 18)
+                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(dteNgaysinh, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                            .addComponent(txtTenkhachhang))))
                 .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
@@ -301,7 +306,7 @@ public class HopDong_Form extends javax.swing.JFrame {
                     .addComponent(jLabel18)))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(btnThem)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -309,9 +314,8 @@ public class HopDong_Form extends javax.swing.JFrame {
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rdoConhan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(18, 18, 18)
-                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(34, 34, 34)
-                        .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, 166, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dteNgayhethan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -330,14 +334,15 @@ public class HopDong_Form extends javax.swing.JFrame {
                         .addGap(18, 18, 18)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addComponent(jLabel3)
-                            .addComponent(txtNgaysinh)))
+                            .addComponent(dteNgaysinh, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(90, 90, 90)
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(rdoNu)
                             .addComponent(rdoNam)
-                            .addComponent(jLabel8))))
-                .addGap(18, 18, 18)
+                            .addComponent(jLabel8))
+                        .addGap(18, 18, Short.MAX_VALUE)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(txtSdt, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel4)
@@ -372,25 +377,25 @@ public class HopDong_Form extends javax.swing.JFrame {
                     .addComponent(jLabel17)
                     .addComponent(txtGiadien, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
                 .addGap(20, 20, 20)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(txtNgayki)
-                    .addComponent(jLabel14)
-                    .addComponent(jLabel18)
-                    .addComponent(txtGianuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(18, 18, 18)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel15)
-                    .addComponent(txtNgayhethan)
-                    .addComponent(cboDichvu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jLabel19))
-                .addGap(18, 18, 18)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                        .addComponent(jLabel16)
-                        .addComponent(rdoConhan)
-                        .addComponent(rdoHethan))
-                    .addComponent(jDateChooser1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addGap(31, 31, 31)
+                        .addComponent(jLabel14)
+                        .addComponent(jLabel18)
+                        .addComponent(txtGianuoc, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dteNgayki, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(dteNgayhethan, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel15)
+                        .addComponent(cboDichvu, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(jLabel19)))
+                .addGap(18, 18, 18)
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(jLabel16)
+                    .addComponent(rdoConhan)
+                    .addComponent(rdoHethan))
+                .addGap(32, 32, 32)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnThem)
                     .addComponent(btnKetthuc))
@@ -501,9 +506,13 @@ public class HopDong_Form extends javax.swing.JFrame {
         if(checkEmpty()){
             HopDong hopdong=getDataForm();
             if(kiemTraTrungMaHopDong(hopdong.getMaHopDong(), danhSachHopDong)==false){
-            boolean isSuccess = hopdongctrl.addHopDong(hopdong);
+            boolean isSuccess = hopdongctrl.addHopDong(hopdong,room.getMaPhong());
             if(isSuccess){
+                
                 JOptionPane.showMessageDialog(this, "Thêm hợp đồng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                Home_Form a=new Home_Form();
+                a.setVisible(true);
+                this.dispose();
             }else {
                 JOptionPane.showMessageDialog(this, "Thêm hợp đồng không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
@@ -522,7 +531,10 @@ public class HopDong_Form extends javax.swing.JFrame {
                 String tenkhachhang=resultSet.getString("tenkhachhang");
                 txtTenkhachhang.setText(tenkhachhang);
                 String ngaysinh=resultSet.getString("ngaysinh");
-                txtNgaysinh.setText(ngaysinh);
+                
+                Date ngaySinh = resultSet.getDate("ngaysinh");
+                dteNgaysinh.setDate(ngaySinh);
+                
                 String gioitinh = resultSet.getString("gioitinh");
                 if (gioitinh.equalsIgnoreCase("Nam")) {
                     rdoNam.setSelected(true);
@@ -541,10 +553,13 @@ public class HopDong_Form extends javax.swing.JFrame {
                 txtTang.setText(tang);
                 int tiencoc = resultSet.getInt("tiencoc");
                 txtTiencoc.setText(Integer.toString(tiencoc));
-                String ngayki = resultSet.getString("ngayki");
-                txtNgayki.setText(ngayki);
-                String ngayhethan = resultSet.getString("ngayhethan");
-                txtNgayhethan.setText(ngayhethan);
+                
+                Date ngayKi = resultSet.getDate("ngayki");
+                dteNgayki.setDate(ngayKi);
+                Date ngayHetHan = resultSet.getDate("ngayhethan");
+                dteNgayhethan.setDate(ngayHetHan);
+               
+                
                 String trangthai = resultSet.getString("trangthai");
                 if (trangthai.equalsIgnoreCase("Còn hạn")) {
                     rdoConhan.setSelected(true);
@@ -618,6 +633,26 @@ public class HopDong_Form extends javax.swing.JFrame {
             } 
     }//GEN-LAST:event_btnKetthucActionPerformed
 
+    private void rdoConhanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoConhanActionPerformed
+        if (rdoConhan.isSelected()) {
+            trangthai = rdoConhan.getText().toString(); // Lấy giá trị của radio button và gán vào biến
+        } else if (rdoHethan.isSelected()) {
+            trangthai= rdoHethan.getText().toString(); // Lấy giá trị của radio button và gán vào biến
+        } else {
+            trangthai = ""; // Nếu không có radio button nào được chọn
+        }
+    }//GEN-LAST:event_rdoConhanActionPerformed
+
+    private void rdoHethanActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_rdoHethanActionPerformed
+       if (rdoHethan.isSelected()) {
+            trangthai = rdoHethan.getText().toString(); // Lấy giá trị của radio button và gán vào biến
+        } else if (rdoConhan.isSelected()) {
+            trangthai= rdoConhan.getText().toString(); // Lấy giá trị của radio button và gán vào biến
+        } else {
+            trangthai = ""; // Nếu không có radio button nào được chọn
+        }
+    }//GEN-LAST:event_rdoHethanActionPerformed
+
     public static void main(String args[]) {
         /* Set the Nimbus look and feel */
         //<editor-fold defaultstate="collapsed" desc=" Look and feel setting code (optional) ">
@@ -663,18 +698,23 @@ public class HopDong_Form extends javax.swing.JFrame {
     public HopDong getDataForm(){
         String mahopdong=txtMahopdong.getText().toString();
         String tenkhachhang=txtTenkhachhang.getText().toString();
-        String ngaysinh=txtNgaysinh.getText().toString();
+        
+        Date ngaysinh = dteNgaysinh.getDate();
+        
         String sdt=txtSdt.getText().toString();
         String cccd=txtCccd.getText().toString();
         String email=txtEmail.getText().toString();
         String diachi=txtDiachi.getText().toString();
         int tiencoc=Integer.parseInt(txtTiencoc.getText().toString());
-        String ngayki=txtNgayki.getText().toString();
+        
+        Date ngayki = dteNgayki.getDate();
+        Date ngayhethan = dteNgayhethan.getDate();
+        
         int giadien=Integer.parseInt(txtGiadien.getText().toString());
         int gianuoc=Integer.parseInt(txtGianuoc.getText().toString());
         String selected=cboDichvu.getSelectedItem().toString();
         String madichvu=DichVuMap.get(selected);
-        String ngayhethan=txtNgayhethan.getText().toString();
+       
         HopDong hopdong=new HopDong(mahopdong,tenkhachhang,ngaysinh,gioitinh,sdt,email,diachi,
         tiencoc,ngayki,ngayhethan,trangthai,giadien,gianuoc,madichvu,cccd);
         return hopdong;
@@ -684,6 +724,12 @@ public class HopDong_Form extends javax.swing.JFrame {
         if(room.getMahopdong()!= null){
         displayDataFromDatabase(room.getMaPhong());
         }else{
+            txtTenphong.setText(room.getMaPhong());
+            txtTang.setText(String.valueOf(room.getTang()));
+            LoaiPhong a=loaiphongctrl.getGiaPhong(room.getMaPhong());
+            txtGiaphong.setText(String.valueOf(a.getGia()));
+            txtLoaiphong.setText(a.getTen());
+
             btnKetthuc.setVisible(false);
             btnThem.setVisible(true);
         }
@@ -692,23 +738,23 @@ public class HopDong_Form extends javax.swing.JFrame {
     private boolean checkEmpty() {
     String mahopdong = txtMahopdong.getText().trim();
     String tenkhachhang = txtTenkhachhang.getText().trim();
-    String ngaysinh = txtNgaysinh.getText().trim();
+
     String sdt = txtSdt.getText().trim();
     String cccd = txtCccd.getText().trim();
     String email = txtEmail.getText().trim();
     String diachi = txtDiachi.getText().trim();
     String tiencocStr = txtTiencoc.getText().trim();
-    String ngayki = txtNgayki.getText().trim();
+    
     String giadienStr = txtGiadien.getText().trim();
     String gianuocStr = txtGianuoc.getText().trim();
     String selected = cboDichvu.getSelectedItem().toString();
     String madichvu = DichVuMap.get(selected);
-    String ngayhethan = txtNgayhethan.getText().trim();
+
     
     // Kiểm tra từng trường một
-    if (mahopdong.isEmpty() || tenkhachhang.isEmpty() || ngaysinh.isEmpty() || sdt.isEmpty() || cccd.isEmpty() || 
-            email.isEmpty() || diachi.isEmpty() || tiencocStr.isEmpty() || ngayki.isEmpty() || giadienStr.isEmpty() || 
-            gianuocStr.isEmpty() || madichvu.isEmpty() || ngayhethan.isEmpty()) {
+    if (mahopdong.isEmpty() || tenkhachhang.isEmpty()  || sdt.isEmpty() || cccd.isEmpty() || 
+            email.isEmpty() || diachi.isEmpty() || tiencocStr.isEmpty() ||  giadienStr.isEmpty() || 
+            gianuocStr.isEmpty() || madichvu.isEmpty() ) {
         JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false; // Trường nào đó rỗng, không hợp lệ
     }
@@ -727,7 +773,9 @@ public class HopDong_Form extends javax.swing.JFrame {
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.ButtonGroup buttonGroup2;
     private javax.swing.JComboBox<String> cboDichvu;
-    private com.toedter.calendar.JDateChooser jDateChooser1;
+    private com.toedter.calendar.JDateChooser dteNgayhethan;
+    private com.toedter.calendar.JDateChooser dteNgayki;
+    private com.toedter.calendar.JDateChooser dteNgaysinh;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;
@@ -765,9 +813,6 @@ public class HopDong_Form extends javax.swing.JFrame {
     private javax.swing.JTextField txtGiaphong;
     private javax.swing.JTextField txtLoaiphong;
     private javax.swing.JTextField txtMahopdong;
-    private javax.swing.JTextField txtNgayhethan;
-    private javax.swing.JTextField txtNgayki;
-    private javax.swing.JTextField txtNgaysinh;
     private javax.swing.JTextField txtSdt;
     private javax.swing.JTextField txtTang;
     private javax.swing.JTextField txtTenkhachhang;

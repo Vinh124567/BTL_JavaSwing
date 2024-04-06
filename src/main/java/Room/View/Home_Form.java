@@ -124,7 +124,7 @@ private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFr
                 } else {
                     roomController.deleteRoom(room.getMaPhong());
                     loadData();
-                    currentFrame.dispose(); // Đóng form hiện tại
+//                    currentFrame.dispose(); // Đóng form hiện tại
                 }
             } 
         }
