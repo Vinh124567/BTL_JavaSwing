@@ -27,7 +27,7 @@ public class ListRoom_Form extends javax.swing.JFrame {
     LoaiPhong_Controller loaiphongcontroller = new LoaiPhong_Controller();
     DefaultTableModel model;
     Map<Integer, String> loaiPhongMap1=loaiphongcontroller.getLoaiPhongData1();
-     Map<String, Integer> loaiPhongMap=loaiphongcontroller.getLoaiPhongData();;
+    Map<String, Integer> loaiPhongMap=loaiphongcontroller.getLoaiPhongData();;
     ArrayList<Room> rooms = roomController.getRoom();
     
     public ListRoom_Form() {

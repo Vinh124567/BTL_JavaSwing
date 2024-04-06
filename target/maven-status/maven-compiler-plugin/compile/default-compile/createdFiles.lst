@@ -5,15 +5,21 @@ Room\View\Home_Form.class
 Room\View\Home_Form$5.class
 HopDong\View\HopDong_Form$5.class
 Room\View\ListRoom_Form$6.class
+loaiphong\View\LoaiPhong_Form$4.class
 Room\View\ListRoom_Form$2.class
+loaiphong\View\ThemPhong_Form.class
 HopDong\View\HopDong_Form$3.class
+loaiphong\View\ThemPhong_Form$1.class
 Room\View\Home_Form$4.class
 Room\View\ListRoom_Form$1.class
 Room\View\Home_Form$2.class
 HopDong\View\HopDong_Form$8.class
+loaiphong\View\LoaiPhong_Form.class
 Room\View\Home_Form$7.class
+loaiphong\View\LoaiPhong_Form$2.class
 Room\View\ListRoom_Form$4.class
 HopDong\View\HopDong_Form$6.class
+loaiphong\View\LoaiPhong_Form$5.class
 Room\View\Home_Form$6.class
 loaiphong\controller\LoaiPhong_Controller.class
 Room\View\ListRoom_Form$3.class
@@ -28,6 +34,8 @@ Room\View\Home_Form$1.class
 Room\View\Home_Form$3.class
 HopDong\View\HopDong_Form$4.class
 HopDong\View\HopDong_Form$9.class
+loaiphong\View\LoaiPhong_Form$1.class
+loaiphong\View\LoaiPhong_Form$3.class
 model\HopDong.class
 Room\View\ListRoom_Form$5.class
 Database\ConnectDB.class
@@ -35,3 +43,4 @@ Home\View\Home_Page$1.class
 HopDong\View\HopDong_Form.class
 Room\View\Home_Form$8.class
 DichVu\Controller\DichVu_Controller.class
+loaiphong\View\LoaiPhong_Form$6.class

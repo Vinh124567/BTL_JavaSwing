@@ -13,6 +13,11 @@ public class LoaiPhong {
     private String ten;
     int gia;
 
+    public LoaiPhong(String ten, int gia) {
+        this.ten = ten;
+        this.gia = gia;
+    }
+
     public LoaiPhong(int id, String ten, int gia) {
         this.id = id;
         this.ten = ten;

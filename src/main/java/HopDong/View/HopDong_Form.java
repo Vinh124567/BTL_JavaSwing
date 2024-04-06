@@ -31,6 +31,7 @@ public class HopDong_Form extends javax.swing.JFrame {
     
     LoaiPhong_Controller loaiphongctrl=new LoaiPhong_Controller();
     DichVu_Controller dichvu=new DichVu_Controller();
+    DefaultTableModel model;
     HopDong_Controller hopdongctrl=new HopDong_Controller();
     Map<String, String> DichVuMap=dichvu.getMaDichVu();
     String gioitinh="";
@@ -50,22 +51,7 @@ public class HopDong_Form extends javax.swing.JFrame {
         this.room = room;
         setLocationRelativeTo(null);
         roomHasContract(room);
-        DefaultTableModel model = (DefaultTableModel) tblDichvu.getModel();
-            model.setRowCount(0);
-            
-            
-            
-           for (DichVu c : serviceList) {
-            Object[] rowData = {c.getId(), c.getTengoi(), c.getGia(),c.getMota()};
-            model.addRow(rowData);
-        }
-           for (String goidichvu : DichVuMap.keySet()) {
-            cboDichvu.addItem(goidichvu);
-        }
-           
-           roomHasContract(room);
-           
-           
+        loadDichVu();
 
     }
 
@@ -73,7 +59,18 @@ public class HopDong_Form extends javax.swing.JFrame {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-  
+    public void loadDichVu(){
+        model = (DefaultTableModel) tblDichvu.getModel();
+            model.setRowCount(0);
+
+           for (DichVu c : serviceList) {
+            Object[] rowData = {c.getId(), c.getTengoi(), c.getGia(),c.getMota()};
+            model.addRow(rowData);
+        }
+           for (String goidichvu : DichVuMap.keySet()) {
+            cboDichvu.addItem(goidichvu);
+        }
+    }
     @SuppressWarnings("unchecked")
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
