@@ -65,7 +65,7 @@ public class HopDong_Form extends javax.swing.JFrame {
     }
 
     public void loadDichVu(){
-        model = (DefaultTableModel) tblDichvu.getModel();
+            model = (DefaultTableModel) tblDichvu.getModel();
             model.setRowCount(0);
 
            for (DichVu c : serviceList) {
@@ -219,11 +219,16 @@ public class HopDong_Form extends javax.swing.JFrame {
 
         jLabel18.setText("Giá nước");
 
+        txtGiadien.setEditable(false);
+        txtGiadien.setText("3000");
         txtGiadien.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtGiadienActionPerformed(evt);
             }
         });
+
+        txtGianuoc.setEditable(false);
+        txtGianuoc.setText("15000");
 
         jLabel19.setText("Gói dịch vụ");
 

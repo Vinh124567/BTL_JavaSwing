@@ -4,6 +4,7 @@
  */
 package Room.View;
 
+import HoaDon.View.HoaDon_Form;
 import Home.View.Home_Page;
 import HopDong.View.HopDong_Form;
 import Room.Controller.Room_Controller;
@@ -93,25 +94,31 @@ private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFr
 
     // Tạo các tùy chọn
     JMenuItem viewRoomInfoItem = new JMenuItem("Xem thông tin");
-    JMenuItem createContractItem = new JMenuItem("Tạo hợp đồng");
+    JMenuItem createBillItem = new JMenuItem("Hoá đơn");
     JMenuItem deleteRoom = new JMenuItem("Xóa");
 
     // Thêm ActionListener cho mỗi tùy chọn
     viewRoomInfoItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Thực hiện hành động khi chọn "Xem thông tin phòng"
+           
             HopDong_Form hopdong_Form = new HopDong_Form(room);
             hopdong_Form.setVisible(true);
             currentFrame.dispose(); // Đóng form hiện tại
         }
     });
 
-    createContractItem.addActionListener(new ActionListener() {
+    createBillItem.addActionListener(new ActionListener() {
         @Override
         public void actionPerformed(ActionEvent e) {
-            // Thực hiện hành động khi chọn "Tạo hợp đồng"
-            JOptionPane.showMessageDialog(null, "Đang tạo hợp đồng cho sản phẩm: " + room.getMaPhong());
+            if(room.getMahopdong()==null){
+                 JOptionPane.showMessageDialog(null, "Phòng chưa tạo hợp đồng không thể tạo hóa đơn", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                 return;
+            }else{
+            HoaDon_Form hoadon_Form = new HoaDon_Form(room);
+            hoadon_Form.setVisible(true);
+            currentFrame.dispose(); 
+        }
         }
     });
 
@@ -133,7 +140,7 @@ private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFr
 
     // Thêm các tùy chọn vào JPopupMenu
     popupMenu.add(viewRoomInfoItem);
-    popupMenu.add(createContractItem);
+    popupMenu.add(createBillItem);
     popupMenu.add(deleteRoom);
 
     // Hiển thị JPopupMenu tại vị trí chuột được click
