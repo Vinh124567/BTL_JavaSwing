@@ -21,11 +21,54 @@ public class HopDong {
     private String email;
     private String diaChi;
     private int tienCoc;
+   
     private String trangThai;
     private int giaDien;
     private int giaNuoc;
     private String maDichVu;
     private String cccd;
+    
+    private int giaphong;
+    private String goidichvu;
+
+    public HopDong(Date ngayKi, Date ngayHetHan, String maHopDong, String tenKhachHang, int tienCoc, String trangThai, int giaphong, String goidichvu, String maphong) {
+        this.ngayKi = ngayKi;
+        this.ngayHetHan = ngayHetHan;
+        this.maHopDong = maHopDong;
+        this.tenKhachHang = tenKhachHang;
+        this.tienCoc = tienCoc;
+        this.trangThai = trangThai;
+        this.giaphong = giaphong;
+        this.goidichvu = goidichvu;
+        this.maphong = maphong;
+    }
+
+    public int getGiaphong() {
+        return giaphong;
+    }
+
+    public String getGoidichvu() {
+        return goidichvu;
+    }
+
+    public String getMaphong() {
+        return maphong;
+    }
+
+    public void setGiaphong(int giaphong) {
+        this.giaphong = giaphong;
+    }
+
+    public void setGoidichvu(String goidichvu) {
+        this.goidichvu = goidichvu;
+    }
+
+    public void setMaphong(String maphong) {
+        this.maphong = maphong;
+    }
+
+    
+    private String maphong;
 
     public void setMaHopDong(String maHopDong) {
         this.maHopDong = maHopDong;

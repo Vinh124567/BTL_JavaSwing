@@ -26,7 +26,7 @@ import model.Room;
  */
 public class ListHoaDon_Form extends javax.swing.JFrame {
 
-    LoaiPhong_Controller loaiphongctrl=new LoaiPhong_Controller();
+     LoaiPhong_Controller loaiphongctrl=new LoaiPhong_Controller();
      HoaDon_Controller hoadonctrl=new HoaDon_Controller();
      List<HoaDon> hoaDonList ;
      DefaultTableModel model;
@@ -52,6 +52,8 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
     private void initComponents() {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
+        buttonGroup2 = new javax.swing.ButtonGroup();
+        buttonGroup3 = new javax.swing.ButtonGroup();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -89,6 +91,9 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
         jScrollPane1 = new javax.swing.JScrollPane();
         tblHoadon = new javax.swing.JTable();
         btnBack = new javax.swing.JButton();
+        rdoDathanhtoan1 = new javax.swing.JCheckBox();
+        rdoChuathanhtoan1 = new javax.swing.JCheckBox();
+        rdoTatca = new javax.swing.JCheckBox();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -211,23 +216,6 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
                         .addGap(20, 143, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                                    .addComponent(jLabel4)
-                                    .addComponent(jLabel11)
-                                    .addComponent(jLabel12))
-                                .addGap(18, 18, 18)
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                                    .addComponent(txtMahoadon, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                                    .addComponent(txtTenkhachhang, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
-                                    .addComponent(txtTenphong)
-                                    .addComponent(txtMahopdong))
-                                .addGap(0, 0, Short.MAX_VALUE))
-                            .addGroup(jPanel1Layout.createSequentialGroup()
-                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
-                                    .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
-                                    .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING))
-                                .addGap(0, 306, Short.MAX_VALUE))
                             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel1Layout.createSequentialGroup()
                                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                     .addComponent(jLabel2, javax.swing.GroupLayout.PREFERRED_SIZE, 37, javax.swing.GroupLayout.PREFERRED_SIZE)
@@ -266,7 +254,24 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
                                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                                         .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                                             .addComponent(txtLammoi)
-                                            .addComponent(rdoChuathanhtoan))))))
+                                            .addComponent(rdoChuathanhtoan)))))
+                            .addGroup(jPanel1Layout.createSequentialGroup()
+                                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(jPanel1Layout.createSequentialGroup()
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                            .addComponent(jLabel4)
+                                            .addComponent(jLabel11)
+                                            .addComponent(jLabel12))
+                                        .addGap(18, 18, 18)
+                                        .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                            .addComponent(txtMahoadon, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                            .addComponent(txtTenkhachhang, javax.swing.GroupLayout.DEFAULT_SIZE, 205, Short.MAX_VALUE)
+                                            .addComponent(txtTenphong)
+                                            .addComponent(txtMahopdong)))
+                                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
+                                        .addComponent(jLabel1, javax.swing.GroupLayout.PREFERRED_SIZE, 73, javax.swing.GroupLayout.PREFERRED_SIZE)
+                                        .addComponent(jLabel5, javax.swing.GroupLayout.Alignment.LEADING)))
+                                .addGap(0, 0, Short.MAX_VALUE)))
                         .addContainerGap())))
         );
         jPanel1Layout.setVerticalGroup(
@@ -372,6 +377,30 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
             }
         });
 
+        buttonGroup3.add(rdoDathanhtoan1);
+        rdoDathanhtoan1.setText("Đã thanh toán");
+        rdoDathanhtoan1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoDathanhtoan1ItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup3.add(rdoChuathanhtoan1);
+        rdoChuathanhtoan1.setText("Chưa thanh toán");
+        rdoChuathanhtoan1.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoChuathanhtoan1ItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup3.add(rdoTatca);
+        rdoTatca.setText("Tất cả");
+        rdoTatca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoTatcaItemStateChanged(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -385,6 +414,12 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
                         .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(btnBack)
+                        .addGap(351, 351, 351)
+                        .addComponent(rdoDathanhtoan1)
+                        .addGap(31, 31, 31)
+                        .addComponent(rdoChuathanhtoan1, javax.swing.GroupLayout.PREFERRED_SIZE, 113, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(rdoTatca, javax.swing.GroupLayout.PREFERRED_SIZE, 85, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(0, 0, Short.MAX_VALUE)))
                 .addContainerGap())
         );
@@ -392,7 +427,11 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                .addComponent(btnBack)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                    .addComponent(btnBack)
+                    .addComponent(rdoDathanhtoan1)
+                    .addComponent(rdoChuathanhtoan1)
+                    .addComponent(rdoTatca))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jPanel2, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
@@ -502,6 +541,24 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
         this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
 
+    private void rdoDathanhtoan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoDathanhtoan1ItemStateChanged
+        if(rdoDathanhtoan1.isSelected()){
+            loadDataTableThanhToan();
+        }
+    }//GEN-LAST:event_rdoDathanhtoan1ItemStateChanged
+
+    private void rdoChuathanhtoan1ItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoChuathanhtoan1ItemStateChanged
+        if(rdoChuathanhtoan1.isSelected()){
+            loadDataTableChuaThanhToan();
+        }
+    }//GEN-LAST:event_rdoChuathanhtoan1ItemStateChanged
+
+    private void rdoTatcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoTatcaItemStateChanged
+        if(rdoTatca.isSelected()){
+            loadDataTable();
+        }
+    }//GEN-LAST:event_rdoTatcaItemStateChanged
+
     /**
      * @param args the command line arguments
      */
@@ -576,6 +633,26 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
            
     }
     
+    public void loadDataTableThanhToan(){
+            model = (DefaultTableModel) tblHoadon.getModel();
+            model.setRowCount(0);
+            hoaDonList=hoadonctrl.getAllHoaDonThanhToan();
+            for (HoaDon c : hoaDonList) {
+            Object[] rowData = {c.getMahoadon(), c.getMahopdong(), c.getMaphong(),c.getTenkhachhang(),c.getNgaytao(),c.getTongtien(),c.getTrangthai()};
+            model.addRow(rowData);
+        }    
+    }
+    
+    public void loadDataTableChuaThanhToan(){
+            model = (DefaultTableModel) tblHoadon.getModel();
+            model.setRowCount(0);
+            hoaDonList=hoadonctrl.getAllHoaDonChuaThanhToan();
+            for (HoaDon c : hoaDonList) {
+            Object[] rowData = {c.getMahoadon(), c.getMahopdong(), c.getMaphong(),c.getTenkhachhang(),c.getNgaytao(),c.getTongtien(),c.getTrangthai()};
+            model.addRow(rowData);
+        }    
+    }
+    
     private void fetchDataTableClick(HoaDon hoadon){
         txtMahoadon.setText(hoadon.getMahoadon());
         txtTenkhachhang.setText(hoadon.getTenkhachhang());
@@ -617,6 +694,9 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
     }
     return true; // Tất cả trường đều không rỗng và hợp lệ
 }
+    
+    
+
 
     public void AllowNumber() {
     AbstractDocument doc1 = (AbstractDocument) txtDien.getDocument();
@@ -631,6 +711,8 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
     private javax.swing.JButton btnSua;
     private javax.swing.JButton btnXoa;
     private javax.swing.ButtonGroup buttonGroup1;
+    private javax.swing.ButtonGroup buttonGroup2;
+    private javax.swing.ButtonGroup buttonGroup3;
     private com.toedter.calendar.JDateChooser dteNgaytao;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
@@ -650,7 +732,10 @@ public class ListHoaDon_Form extends javax.swing.JFrame {
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JRadioButton rdoChuathanhtoan;
+    private javax.swing.JCheckBox rdoChuathanhtoan1;
     private javax.swing.JRadioButton rdoDathanhtoan;
+    private javax.swing.JCheckBox rdoDathanhtoan1;
+    private javax.swing.JCheckBox rdoTatca;
     private javax.swing.JTable tblHoadon;
     private javax.swing.JTextField txtDien;
     private javax.swing.JTextField txtGiadichvu;

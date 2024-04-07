@@ -9,6 +9,7 @@ import DichVu.View.DichVu_Form;
 import Home.View.Home_Page;
 import Room.Controller.Room_Controller;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Objects;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -183,7 +184,6 @@ public class LoaiPhong_Form extends javax.swing.JFrame {
             .addGap(0, 0, Short.MAX_VALUE)
         );
 
-        tblLoaiphong.setBorder(javax.swing.BorderFactory.createTitledBorder("Chi tiết"));
         tblLoaiphong.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null},
@@ -256,6 +256,7 @@ public class LoaiPhong_Form extends javax.swing.JFrame {
 
     private void tblLoaiphongMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblLoaiphongMouseClicked
        int i=tblLoaiphong.getSelectedRow();
+       btnThem.setEnabled(false);
         TableModel model =tblLoaiphong.getModel();
         Object mahopdongValue = model.getValueAt(i, 1);
         txtTenloaiphong.setText(model.getValueAt(i,1).toString()); 
@@ -286,9 +287,26 @@ public class LoaiPhong_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnLammoiActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        ThemLoaiPhong_Form themloaiphong=new ThemLoaiPhong_Form();
-        themloaiphong.setVisible(true);
-        this.dispose();
+        String name = txtTenloaiphong.getText().toString().trim();
+        String giaStr = txtGia.getText().trim();
+         if (isEmpty(name) || isEmpty(giaStr)) {
+            JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
+            return; 
+         }
+         int gia = Integer.parseInt(giaStr);
+         LoaiPhong a = new LoaiPhong(name, gia);
+         if (kiemTraTrungMaDV(a.getTen(), loaiphongs) == false) {
+             Boolean success = loaiphongCtrl.insertLoaiPhong(a);
+                    if (success) {
+                        clear();
+                        loadDatatable();
+                        JOptionPane.showMessageDialog(this, "Thêm loại phòng thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+                    } else {
+                        JOptionPane.showMessageDialog(this, "Thêm loại phòng thất bại", "Thất bại", JOptionPane.ERROR_MESSAGE);
+                    }
+         }else {
+                    JOptionPane.showMessageDialog(this, "Tên phòng đã tồn tại", "Thất bại", JOptionPane.ERROR_MESSAGE);
+               }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnXoaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnXoaActionPerformed
@@ -321,6 +339,16 @@ public class LoaiPhong_Form extends javax.swing.JFrame {
          
     }
      
+    public boolean kiemTraTrungMaDV(String tenloaiphong, List<LoaiPhong> danhSachLoaiPhong) {
+    for (LoaiPhong lp : loaiphongs) {
+        if (lp.getTen().equals(tenloaiphong)) {
+             JOptionPane.showMessageDialog(this, "Tên loại phòng đã tồn tại ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return true; // Tồn tại mã phòng trong danh sách
+        }
+    }
+    return false; // Không tìm thấy mã phòng trong danh sách
+}
+     
     
     
      public LoaiPhong getObj() {
@@ -342,8 +370,7 @@ public class LoaiPhong_Form extends javax.swing.JFrame {
      public void clear(){
          txtId.setText("");
          txtTenloaiphong.setText("");
-    
-         
+         btnThem.setEnabled(true);
          AbstractDocument doc = (AbstractDocument) txtGia.getDocument();
         doc.setDocumentFilter(null); // Gỡ bỏ bộ lọc hiện tại
         txtGia.setText("");

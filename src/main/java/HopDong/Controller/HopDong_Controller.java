@@ -11,6 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.List;
 import javax.swing.table.DefaultTableModel;
 import model.HopDong;
 import model.Room;
@@ -65,7 +66,7 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
     }
 }
 
-    public ResultSet displayDataHopDongForm(String id) {
+public ResultSet displayDataHopDongForm(String id) {
              Connection conn = getConnection();
              ResultSet resultSet = null;
              try {
@@ -87,7 +88,7 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
              return resultSet;
          }
     
-    public ArrayList<HopDong>  getHopDong(){
+public ArrayList<HopDong>  getHopDong(){
          Connection conn = getConnection();
         ArrayList<HopDong> listHopDong = new ArrayList<>(); // Khởi tạo danh sách
         if (conn != null) {
@@ -123,8 +124,51 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
         }
         return listHopDong;
     }
+
+    public List<HopDong> getAllHopDong() {
+        List<HopDong> hopDongList = new ArrayList<>();
+        Connection conn = null;
+        PreparedStatement ps = null;
+        ResultSet rs = null;
+        
+        try {
+            conn = getConnection(); // Kết nối tới cơ sở dữ liệu
+            
+            // Câu truy vấn để lấy tất cả các hợp đồng
+            String query = "SELECT hopdong.*, loaiphong.name AS tenloaiphong, phong.tang AS tang, phong.maphong AS maphong, "
+                         + "dichvu.tengoi AS tengoidichvu, dichvu.id AS iddichvu, loaiphong.gia AS giaphong "
+                         + "FROM hopdong "
+                         + "INNER JOIN phong ON hopdong.mahopdong = phong.mahopdong "
+                         + "INNER JOIN loaiphong ON phong.loaiphong = loaiphong.id "
+                         + "INNER JOIN dichvu ON hopdong.madichvu = dichvu.id";
+            ps = conn.prepareStatement(query);
+            rs = ps.executeQuery();
+            
+            // Duyệt qua kết quả trả về và tạo đối tượng HopDong từ mỗi hàng
+            while (rs.next()) {
+                HopDong hopDong = new HopDong();
+                hopDong.setMaHopDong(rs.getString("mahopdong"));
+                hopDong.setMaphong(rs.getString("maphong"));
+                hopDong.setTenKhachHang(rs.getString("tenkhachhang"));
+                hopDong.setNgayKi(rs.getDate("ngayki"));
+                hopDong.setNgayHetHan(rs.getDate("ngayhethan"));
+                hopDong.setTienCoc(rs.getInt("tiencoc"));
+                hopDong.setGoidichvu(rs.getString("tengoidichvu"));
+                hopDong.setTrangThai(rs.getString("trangthai"));
+                hopDong.setGiaphong(rs.getInt("giaphong"));
+  
+                hopDongList.add(hopDong);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } finally {
+            
+        }
+        
+        return hopDongList;
+    }
     
-    public boolean deleteHopDong(String id) {
+public boolean deleteHopDong(String id) {
         Connection conn = getConnection();
         if (conn != null) {
             String query = "DELETE FROM hopdong WHERE mahopdong = ?";
@@ -149,7 +193,7 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
         return false; // Trả về false nếu xóa không thành công
     }
     
-   public boolean checkQueryResult(String id) {
+public boolean checkQueryResult(String id) {
     Connection conn = getConnection();
     String query = "SELECT * FROM hopdong "
             + "INNER JOIN hoadon ON hopdong.mahopdong = hoadon.mahopdong "
@@ -167,6 +211,28 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
     return false; 
 }
 
+
+ public boolean updateTrangThai(String id) {
+    Connection conn = getConnection();
+    if (conn != null) {
+        String query = "UPDATE hopdong SET trangthai = 'Hết hạn' WHERE mahopdong = ?";
+        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+            psmt.setString(1, id);
+            int rowsUpdated = psmt.executeUpdate(); 
+            if (rowsUpdated > 0) {
+                System.out.println("Cập nhật hợp đồng thành công.");
+                return true;
+            } else {
+                System.out.println("Không tìm thấy hợp đồng để cập nhật.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi trong khi cập nhật: " + e.getMessage());
+        }
+    } else {
+        System.out.println("Kết nối đến cơ sở dữ liệu thất bại.");
+    }
+    return false; // Trả về false nếu cập nhật không thành công
+}
 
 }
 

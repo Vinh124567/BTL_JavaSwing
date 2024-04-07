@@ -78,6 +78,64 @@ public class Room_Controller extends ConnectDB {
         }
         return listRoom;
     }
+ 
+ public ArrayList<Room> getContractRoom() {
+        Connection conn = getConnection();
+        ArrayList<Room> listRoom = new ArrayList<>(); // Khởi tạo danh sách
+        if (conn != null) {
+            String query = "SELECT * FROM phong WHERE mahopdong IS NOT NULL;"; // Truy vấn để lấy dữ liệu từ bảng phong
+            try (PreparedStatement psmt = conn.prepareStatement(query);
+                 ResultSet rs = psmt.executeQuery()) { // Thực hiện truy vấn SELECT và lấy kết quả
+                while (rs.next()) {
+                    // Tạo đối tượng Room từ dữ liệu trong kết quả
+                    Room room = new Room();
+                    room.setMaPhong(rs.getString("maphong"));
+                    room.setMahopdong(rs.getString("mahopdong"));
+                    room.setLoaiPhong(rs.getInt("loaiphong"));
+                    room.setMoTa(rs.getString("mota"));
+                    room.setTrangThai(rs.getString("trangthai"));
+                    room.setTang(rs.getInt("tang"));
+             
+                    listRoom.add(room);
+                }
+                System.out.println("Data retrieved successfully.");
+            } catch (SQLException e) {
+                System.out.println("Error while retrieving data: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Failed to establish connection to the database.");
+        }
+        return listRoom;
+    }
+ 
+ public ArrayList<Room> getEmptyRoom() {
+        Connection conn = getConnection();
+        ArrayList<Room> listRoom = new ArrayList<>(); // Khởi tạo danh sách
+        if (conn != null) {
+            String query = "SELECT * FROM phong WHERE mahopdong IS NULL;"; // Truy vấn để lấy dữ liệu từ bảng phong
+            try (PreparedStatement psmt = conn.prepareStatement(query);
+                 ResultSet rs = psmt.executeQuery()) { // Thực hiện truy vấn SELECT và lấy kết quả
+                while (rs.next()) {
+                    // Tạo đối tượng Room từ dữ liệu trong kết quả
+                    Room room = new Room();
+                    room.setMaPhong(rs.getString("maphong"));
+                    room.setMahopdong(rs.getString("mahopdong"));
+                    room.setLoaiPhong(rs.getInt("loaiphong"));
+                    room.setMoTa(rs.getString("mota"));
+                    room.setTrangThai(rs.getString("trangthai"));
+                    room.setTang(rs.getInt("tang"));
+             
+                    listRoom.add(room);
+                }
+                System.out.println("Data retrieved successfully.");
+            } catch (SQLException e) {
+                System.out.println("Error while retrieving data: " + e.getMessage());
+            }
+        } else {
+            System.out.println("Failed to establish connection to the database.");
+        }
+        return listRoom;
+    }
     
  public boolean deleteRoom(String id) {
         Connection conn = getConnection();

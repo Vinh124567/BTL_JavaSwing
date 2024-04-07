@@ -44,26 +44,40 @@ public class Home_Form extends javax.swing.JFrame {
      LoaiPhong_Controller loaiphongcontroller = new LoaiPhong_Controller();
     Map<String, Integer> loaiPhongMap=loaiphongcontroller.getLoaiPhongData();;
     ArrayList<Room> rooms = roomController.getRoom();
+    ArrayList<Room> contractrooms = roomController.getContractRoom();
+     ArrayList<Room> emptyrooms = roomController.getEmptyRoom();
      
      
     public Home_Form() {
         Map<String, Integer> loaiPhongMap = loaiphongcontroller.getLoaiPhongData();
         initComponents();
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        productPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));
-               
-        displayProductData();
-
-           setLocationRelativeTo(null);
-           pack();
-           for (String tenLoaiPhong : loaiPhongMap.keySet()) {
-           cboLoai.addItem(tenLoaiPhong);
-           }
+        productPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 10, 10));    
+        displayRoom();
+        setLocationRelativeTo(null);
+        pack();
+        for (String tenLoaiPhong : loaiPhongMap.keySet()) {
+        cboLoai.addItem(tenLoaiPhong);
+        }
     
     }
     
-private void displayProductData() {
+private void displayRoom() {
     for (Room room : rooms) {
+        JPanel itemPanel = createProductItem(room);
+        productPanel.add(itemPanel);
+    }
+}
+
+private void displayContractRoom() {
+    for (Room room : contractrooms) {
+        JPanel itemPanel = createProductItem(room);
+        productPanel.add(itemPanel);
+    }
+}
+
+private void displayEmptyRoom() {
+    for (Room room : emptyrooms) {
         JPanel itemPanel = createProductItem(room);
         productPanel.add(itemPanel);
     }
@@ -92,7 +106,6 @@ private JPanel createProductItem(Room room) {
 private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFrame) {
     JPopupMenu popupMenu = new JPopupMenu();
 
-    // Tạo các tùy chọn
     JMenuItem viewRoomInfoItem = new JMenuItem("Xem thông tin");
     JMenuItem createBillItem = new JMenuItem("Hoá đơn");
     JMenuItem deleteRoom = new JMenuItem("Xóa");
@@ -131,7 +144,7 @@ private void showProductOptionsPopup(MouseEvent evt, Room room, JFrame currentFr
                     JOptionPane.showMessageDialog(null, "Không thể xóa! Còn hợp đồng chưa xử lý", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 } else {
                     roomController.deleteRoom(room.getMaPhong());
-                    loadData();
+                    loadAllRoom();
 //                    currentFrame.dispose(); // Đóng form hiện tại
                 }
             } 
@@ -168,8 +181,9 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         jPanel3 = new javax.swing.JPanel();
         productPanel = new javax.swing.JPanel();
         jPanel2 = new javax.swing.JPanel();
-        jRadioButton1 = new javax.swing.JRadioButton();
-        jRadioButton2 = new javax.swing.JRadioButton();
+        rdoTrong = new javax.swing.JRadioButton();
+        rdoDathue = new javax.swing.JRadioButton();
+        rdoTatca = new javax.swing.JRadioButton();
         jPanel1 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
@@ -193,11 +207,29 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Lọc"));
 
-        buttonGroup1.add(jRadioButton1);
-        jRadioButton1.setText("Phòng Trống");
+        buttonGroup1.add(rdoTrong);
+        rdoTrong.setText("Phòng Trống");
+        rdoTrong.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoTrongItemStateChanged(evt);
+            }
+        });
 
-        buttonGroup1.add(jRadioButton2);
-        jRadioButton2.setText("Đã Thuê");
+        buttonGroup1.add(rdoDathue);
+        rdoDathue.setText("Đã Thuê");
+        rdoDathue.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoDathueItemStateChanged(evt);
+            }
+        });
+
+        buttonGroup1.add(rdoTatca);
+        rdoTatca.setText("Tất cả");
+        rdoTatca.addItemListener(new java.awt.event.ItemListener() {
+            public void itemStateChanged(java.awt.event.ItemEvent evt) {
+                rdoTatcaItemStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel2Layout = new javax.swing.GroupLayout(jPanel2);
         jPanel2.setLayout(jPanel2Layout);
@@ -206,17 +238,24 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addContainerGap()
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jRadioButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jRadioButton2, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rdoDathue, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addComponent(rdoTrong, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(rdoTatca, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))))
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jRadioButton1)
+                .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel2Layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addComponent(rdoTrong))
+                    .addComponent(rdoTatca))
                 .addGap(18, 18, 18)
-                .addComponent(jRadioButton2)
+                .addComponent(rdoDathue)
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
 
@@ -384,7 +423,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
         productPanel.removeAll();
-        displayProductData();
+        displayRoom();
         productPanel.revalidate();
         productPanel.repaint();
     }//GEN-LAST:event_btnLammoiActionPerformed
@@ -410,7 +449,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
             boolean isSuccess = roomController.addRoom(a);
             if (isSuccess) {
                 JOptionPane.showMessageDialog(this, "Thêm phòng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
-                loadData();
+                loadAllRoom();
             } else {
                 JOptionPane.showMessageDialog(this, "Thêm phòng không thành công", "Thông báo", JOptionPane.ERROR_MESSAGE);
             }
@@ -432,11 +471,45 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
              homepage.setVisible(true);
              this.dispose();
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void rdoTrongItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoTrongItemStateChanged
+        if(rdoTrong.isSelected()){
+           loadEmptyRoom();
+       }
+    }//GEN-LAST:event_rdoTrongItemStateChanged
+
+    private void rdoDathueItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoDathueItemStateChanged
+        if(rdoDathue.isSelected()){
+           loadContractRoom();
+       }
+    }//GEN-LAST:event_rdoDathueItemStateChanged
+
+    private void rdoTatcaItemStateChanged(java.awt.event.ItemEvent evt) {//GEN-FIRST:event_rdoTatcaItemStateChanged
+        if(rdoTatca.isSelected()){
+           loadAllRoom();
+       }
+    }//GEN-LAST:event_rdoTatcaItemStateChanged
     
-    public void loadData(){
+    public void loadAllRoom(){
                 productPanel.removeAll();
                 rooms = roomController.getRoom();
-                displayProductData();
+                displayRoom();
+                productPanel.revalidate();
+                productPanel.repaint();
+    }
+    
+    public void loadContractRoom(){
+                productPanel.removeAll();
+                contractrooms = roomController.getContractRoom();
+                displayContractRoom();
+                productPanel.revalidate();
+                productPanel.repaint();
+    }
+    
+    public void loadEmptyRoom(){
+                productPanel.removeAll();
+                contractrooms = roomController.getEmptyRoom();
+                displayContractRoom();
                 productPanel.revalidate();
                 productPanel.repaint();
     }
@@ -492,10 +565,11 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JPanel jPanel3;
-    private javax.swing.JRadioButton jRadioButton1;
-    private javax.swing.JRadioButton jRadioButton2;
     private javax.swing.JTabbedPane jTabbedPane1;
     private javax.swing.JPanel productPanel;
+    private javax.swing.JRadioButton rdoDathue;
+    private javax.swing.JRadioButton rdoTatca;
+    private javax.swing.JRadioButton rdoTrong;
     private javax.swing.JTextField txtMota;
     private javax.swing.JTextField txtTenphong;
     // End of variables declaration//GEN-END:variables

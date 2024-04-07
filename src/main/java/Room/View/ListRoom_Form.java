@@ -32,18 +32,16 @@ public class ListRoom_Form extends javax.swing.JFrame {
     
     public ListRoom_Form() {
         initComponents();
-        btnTaohopdong.setVisible(false);
-        btnXemhopdong.setVisible(false);
+        btnTaohopdong.setEnabled(false);
+        btnXemhopdong.setEnabled(false);
         setLocationRelativeTo(null);
-        
-//        model = (DefaultTableModel) tblRoom.getModel();
-//        model.setRowCount(0);
-         loadDatatable();
+        loadDatatable();
          
          
     }
     
     public void loadDatatable(){
+        
         rooms = roomController.getRoom();
         model = (DefaultTableModel) tblRoom.getModel();
         model.setRowCount(0);
@@ -192,8 +190,8 @@ public class ListRoom_Form extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(btnBack, javax.swing.GroupLayout.PREFERRED_SIZE, 15, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addGap(31, 31, 31)
+                .addComponent(btnBack)
+                .addGap(23, 23, 23)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel1)
                     .addComponent(jLabel4)
@@ -227,22 +225,20 @@ public class ListRoom_Form extends javax.swing.JFrame {
     private void tblRoomMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblRoomMouseClicked
         int i=tblRoom.getSelectedRow();
         TableModel model =tblRoom.getModel();
-        
         Object mahopdongValue = model.getValueAt(i, 1);
         if (Objects.equals(mahopdongValue, null)) {
-        btnTaohopdong.setVisible(true);
-        btnXemhopdong.setVisible(false);
+        btnTaohopdong.setEnabled(true);
+        btnXemhopdong.setEnabled(false);
         txtMahopdong.setText("Chưa tạo hợp đồng");
     } else {
         txtMahopdong.setText(mahopdongValue.toString());
-        btnTaohopdong.setVisible(false);
-        btnXemhopdong.setVisible(true);
+        btnTaohopdong.setEnabled(false);
+        btnXemhopdong.setEnabled(true);
     }
         
         txtMota.setText(model.getValueAt(i,4).toString());
         
         String trangthaiValue = model.getValueAt(i, 5).toString();
-        // Tìm và chọn giá trị tương ứng trong cboTrangthai
         for (int j = 0; j < cboTrangthai.getItemCount(); j++) {
             if (cboTrangthai.getItemAt(j).equals(trangthaiValue)) {
                 cboTrangthai.setSelectedIndex(j);
@@ -307,6 +303,7 @@ public class ListRoom_Form extends javax.swing.JFrame {
         Room room =new Room(maphong,loai,mota,trangthai,tang);
         Boolean success= roomController.updateRoom(room);
         if(success){
+            cboLoaiphong.removeAllItems();
             loadDatatable();
              JOptionPane.showMessageDialog(this, "Cập nhật phòng thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
         }else{

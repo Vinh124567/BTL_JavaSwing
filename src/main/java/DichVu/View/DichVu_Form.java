@@ -14,7 +14,6 @@ import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 import javax.swing.text.AbstractDocument;
-import loaiphong.View.ThemLoaiPhong_Form;
 import model.DichVu;
 
 import model.LoaiPhong;
@@ -259,6 +258,7 @@ public class DichVu_Form extends javax.swing.JFrame {
     
     private void tblDichvuMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tblDichvuMouseClicked
         int i=tblDichvu.getSelectedRow();
+        btnThem.setEnabled(false);
         TableModel model =tblDichvu.getModel();
         Object mahopdongValue = model.getValueAt(i, 1);
         txtId.setText(model.getValueAt(i,0).toString()); 
@@ -294,9 +294,25 @@ public class DichVu_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnXoaActionPerformed
 
     private void btnThemActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnThemActionPerformed
-        ThemDichVu_Form themdichvu=new ThemDichVu_Form();
-        themdichvu.setVisible(true);
-        this.dispose();
+        String id=txtId.getText().toString();
+        String name=txtTengoi.getText().toString();
+        String mota=txtMota.getText().toString();
+        int gia=Integer.parseInt(txtGia.getText());
+        DichVu a=new DichVu(id,name,gia,mota);
+        if(kiemTraTrungMaDV(a.getId(),a.getTengoi(), dichvus)==false){
+               Boolean success=dichvuCtrl.insertDichVu(a);
+        if(success){
+             clear();
+             loadDatatable();
+             JOptionPane.showMessageDialog(this, "Thêm dịch vụ thành công", "Thành công", JOptionPane.INFORMATION_MESSAGE);
+        }else{
+             JOptionPane.showMessageDialog(this, "Thêm dịch vụ thất bại", "Thất bại", JOptionPane.ERROR_MESSAGE);
+        }
+            
+         }else {
+            JOptionPane.showMessageDialog(this, "Tên dịch vụ hoặc mã dịch vụ đã tồn ", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+         }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnLammoiActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLammoiActionPerformed
@@ -348,9 +364,10 @@ public class DichVu_Form extends javax.swing.JFrame {
    
     
     public void clear(){
-         txtId.setText("");
-         txtTengoi.setText("");
-         txtMota.setText("");
+        txtId.setText("");
+        txtTengoi.setText("");
+        txtMota.setText("");
+        btnThem.setEnabled(true);
         AbstractDocument doc = (AbstractDocument) txtGia.getDocument();
         doc.setDocumentFilter(null); // Gỡ bỏ bộ lọc hiện tại
         txtGia.setText("");
@@ -367,7 +384,6 @@ public class DichVu_Form extends javax.swing.JFrame {
      }
     
     public void loadDatatable(){
-         
         dichvus=dichvuCtrl.getDichVu();
         model = (DefaultTableModel) tblDichvu.getModel();
         model.setRowCount(0);
@@ -383,6 +399,16 @@ public void AllowNumber() {
     AbstractDocument doc5 = (AbstractDocument) txtGia.getDocument();
     doc5.setDocumentFilter(new CustomDocumentFilter());
  
+}
+
+public boolean kiemTraTrungMaDV(String madichvu,String tengoi, List<DichVu> danhSachDichVu) {
+    for (DichVu dv : dichvus) {
+        if (dv.getId().equals(madichvu)||dv.getTengoi().equals(tengoi)) {
+             JOptionPane.showMessageDialog(this, "Mã dịch vụ hoặc tên gói dịch vụ đã tồn tại ", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+            return true; // Tồn tại mã phòng trong danh sách
+        }
+    }
+    return false; // Không tìm thấy mã phòng trong danh sách
 }
 
 

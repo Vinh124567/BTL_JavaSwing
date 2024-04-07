@@ -4,17 +4,25 @@
  */
 package HopDong.View;
 
+import Home.View.Home_Page;
+import HopDong.Controller.HopDong_Controller;
+import java.util.List;
+import javax.swing.table.DefaultTableModel;
+
+import model.HopDong;
+
 /**
  *
  * @author vinhp
  */
 public class ListHopDong_Form extends javax.swing.JFrame {
-
-    /**
-     * Creates new form ListHopDong_Form
-     */
+    
+    HopDong_Controller hopdongctrl=new HopDong_Controller();
+    List<HopDong> hopDongList ;
+    DefaultTableModel model;
     public ListHopDong_Form() {
         initComponents();
+        loadDataTable();
         setLocationRelativeTo(null);
     }
 
@@ -27,21 +35,67 @@ public class ListHopDong_Form extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jScrollPane1 = new javax.swing.JScrollPane();
+        tblHopdong = new javax.swing.JTable();
+        btnBack = new javax.swing.JButton();
+
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
+
+        tblHopdong.setModel(new javax.swing.table.DefaultTableModel(
+            new Object [][] {
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null},
+                {null, null, null, null, null, null, null, null, null}
+            },
+            new String [] {
+                "Mã hợp đồng", "Phòng", "Tên khách hàng", "Giá phòng", "Ngày kí", "Ngày hết hạn", "Tiền cọc", "Gói dịch vụ", "Trạng thái"
+            }
+        ) {
+            boolean[] canEdit = new boolean [] {
+                true, true, true, false, true, true, true, true, true
+            };
+
+            public boolean isCellEditable(int rowIndex, int columnIndex) {
+                return canEdit [columnIndex];
+            }
+        });
+        jScrollPane1.setViewportView(tblHopdong);
+
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 796, Short.MAX_VALUE)
+            .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 828, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(btnBack)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 652, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addGap(3, 3, 3)
+                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 614, Short.MAX_VALUE)
+                .addContainerGap())
         );
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        Home_Page homepage=new Home_Page();
+        homepage.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -77,7 +131,21 @@ public class ListHopDong_Form extends javax.swing.JFrame {
             }
         });
     }
+    
+    public void loadDataTable(){
+            model = (DefaultTableModel) tblHopdong.getModel();
+            model.setRowCount(0);
+            hopDongList=hopdongctrl.getAllHopDong();
+            for (HopDong c : hopDongList) {
+            Object[] rowData = {c.getMaHopDong(), c.getMaphong(), c.getTenKhachHang(),c.getGiaphong(),c.getNgayKi(),c.getNgayHetHan(),c.getTienCoc(),c.getTienCoc(),c.getTrangThai()};
+            model.addRow(rowData);
+        }
+           
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
+    private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JTable tblHopdong;
     // End of variables declaration//GEN-END:variables
 }

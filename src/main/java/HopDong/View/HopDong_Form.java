@@ -599,6 +599,7 @@ public class HopDong_Form extends javax.swing.JFrame {
                 Date ngayHienTai = new Date(); // Ngày hiện tại
                 if (ngayHetHan.before(ngayHienTai)) {
                     rdoHethan.setSelected(true);
+                    hopdongctrl.updateTrangThai(mahopdong);
                 }
                 for (int i = 0; i < cboDichvu.getItemCount(); i++) {
                     if (cboDichvu.getItemAt(i).equals(tengoidichvu)) { // So sánh giá trị từ cơ sở dữ liệu với từng mục trong combobox

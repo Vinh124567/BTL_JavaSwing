@@ -164,6 +164,73 @@ public ArrayList<HoaDon> getAllHoaDon(String id) {
     return listHoaDon;
 }
 
+public ArrayList<HoaDon> getAllHoaDonThanhToan() {
+    Connection conn = getConnection();
+    ArrayList<HoaDon> listHoaDon = new ArrayList<>(); // Khởi tạo danh sách
+    if (conn != null) {
+        String query = "SELECT hoadon.*, phong.maphong AS maphong, hopdong.tenkhachhang " +
+                       "FROM hoadon " +
+                       "INNER JOIN phong ON hoadon.mahopdong = phong.mahopdong " +
+                       "INNER JOIN hopdong ON hoadon.mahopdong = hopdong.mahopdong " +
+                       "WHERE hoadon.trangthai = 'Đã thanh toán'";
+        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = psmt.executeQuery()) {
+                while (rs.next()) {
+                    HoaDon hoadon = new HoaDon();
+                    hoadon.setMahoadon(rs.getString("mahoadon"));
+                    hoadon.setMahopdong(rs.getString("mahopdong"));
+                    hoadon.setMaphong(rs.getString("maphong"));
+                    hoadon.setTenkhachhang(rs.getString("tenkhachhang"));
+                    hoadon.setNgaytao(rs.getDate("ngaytao"));
+                    hoadon.setTongtien(rs.getInt("tongtien"));
+                    hoadon.setTrangthai(rs.getString("trangthai"));
+                    listHoaDon.add(hoadon);
+                }
+                System.out.println("Data retrieved successfully.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while retrieving data: " + e.getMessage());
+        }
+    } else {
+        System.out.println("Failed to establish connection to the database.");
+    }
+    return listHoaDon;
+}
+
+public ArrayList<HoaDon> getAllHoaDonChuaThanhToan() {
+    Connection conn = getConnection();
+    ArrayList<HoaDon> listHoaDon = new ArrayList<>(); // Khởi tạo danh sách
+    if (conn != null) {
+        String query = "SELECT hoadon.*, phong.maphong AS maphong, hopdong.tenkhachhang " +
+                       "FROM hoadon " +
+                       "INNER JOIN phong ON hoadon.mahopdong = phong.mahopdong " +
+                       "INNER JOIN hopdong ON hoadon.mahopdong = hopdong.mahopdong " +
+                       "WHERE hoadon.trangthai = 'Chưa thanh toán'";
+        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+            try (ResultSet rs = psmt.executeQuery()) {
+                while (rs.next()) {
+                    HoaDon hoadon = new HoaDon();
+                    hoadon.setMahoadon(rs.getString("mahoadon"));
+                    hoadon.setMahopdong(rs.getString("mahopdong"));
+                    hoadon.setMaphong(rs.getString("maphong"));
+                    hoadon.setTenkhachhang(rs.getString("tenkhachhang"));
+                    hoadon.setNgaytao(rs.getDate("ngaytao"));
+                    hoadon.setTongtien(rs.getInt("tongtien"));
+                    hoadon.setTrangthai(rs.getString("trangthai"));
+                    listHoaDon.add(hoadon);
+                }
+                System.out.println("Data retrieved successfully.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error while retrieving data: " + e.getMessage());
+        }
+    } else {
+        System.out.println("Failed to establish connection to the database.");
+    }
+    return listHoaDon;
+}
+
+
  public boolean deletehoaDon(String id){
         Connection conn = getConnection();
         if (conn != null) {
