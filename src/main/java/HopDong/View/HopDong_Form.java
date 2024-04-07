@@ -4,19 +4,25 @@
  */
 package HopDong.View;
 
+import AllowNumber.CustomDocumentFilter;
 import DichVu.Controller.DichVu_Controller;
 import HopDong.Controller.HopDong_Controller;
+import Room.Controller.Room_Controller;
 import Room.View.Home_Form;
 import java.awt.event.ActionEvent;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.text.SimpleDateFormat;
+import java.time.LocalDate;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
+import javax.swing.ButtonModel;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButton;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.text.AbstractDocument;
 import loaiphong.controller.LoaiPhong_Controller;
 import model.DichVu;
 import model.HopDong;
@@ -28,7 +34,7 @@ import model.Room;
  * @author vinhp
  */
 public class HopDong_Form extends javax.swing.JFrame {
-    
+    Room_Controller roomController = new Room_Controller();
     LoaiPhong_Controller loaiphongctrl=new LoaiPhong_Controller();
     DichVu_Controller dichvu=new DichVu_Controller();
     DefaultTableModel model;
@@ -46,8 +52,7 @@ public class HopDong_Form extends javax.swing.JFrame {
         
         Calendar currentDate = Calendar.getInstance();
         dteNgayki.setCalendar(currentDate);
-//        Date ngayki = dteNgayki.getDate();
-        
+        AllowNumber();
         this.room = room;
         setLocationRelativeTo(null);
         roomHasContract(room);
@@ -313,16 +318,17 @@ public class HopDong_Form extends javax.swing.JFrame {
                     .addComponent(jLabel18)))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                    .addGroup(jPanel1Layout.createSequentialGroup()
-                        .addComponent(btnThem)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(btnKetthuc))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                        .addGroup(jPanel1Layout.createSequentialGroup()
+                            .addComponent(btnThem)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                            .addComponent(btnKetthuc))
+                        .addComponent(dteNgayhethan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rdoConhan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
-                    .addComponent(dteNgayhethan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -519,7 +525,8 @@ public class HopDong_Form extends javax.swing.JFrame {
             if(kiemTraTrungMaHopDong(hopdong.getMaHopDong(), danhSachHopDong)==false){
             boolean isSuccess = hopdongctrl.addHopDong(hopdong,room.getMaPhong());
             if(isSuccess){
-                
+                String them="Đang sử dụng";
+                roomController.updateRoomStatus(room, them);
                 JOptionPane.showMessageDialog(this, "Thêm hợp đồng thành công", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
                 Home_Form a=new Home_Form();
                 a.setVisible(true);
@@ -566,6 +573,8 @@ public class HopDong_Form extends javax.swing.JFrame {
                 int tiencoc = resultSet.getInt("tiencoc");
                 txtTiencoc.setText(Integer.toString(tiencoc));
                 
+                
+                
                 Date ngayKi = resultSet.getDate("ngayki");
                 dteNgayki.setDate(ngayKi);
                 Date ngayHetHan = resultSet.getDate("ngayhethan");
@@ -590,7 +599,13 @@ public class HopDong_Form extends javax.swing.JFrame {
                  btnKetthuc.setVisible(true);
                  btnThem.setVisible(false);
                 
-//                String loai=DichVuMap.get(tengoidichvu);
+                 //
+                Date ngayHienTai = new Date(); // Ngày hiện tại
+                if (ngayHetHan.before(ngayHienTai)) {
+                    rdoHethan.setSelected(true);
+                }
+
+                //
                 
                 for (int i = 0; i < cboDichvu.getItemCount(); i++) {
                     if (cboDichvu.getItemAt(i).equals(tengoidichvu)) { // So sánh giá trị từ cơ sở dữ liệu với từng mục trong combobox
@@ -641,6 +656,8 @@ public class HopDong_Form extends javax.swing.JFrame {
             if (dialogResult == JOptionPane.YES_OPTION) {
                 if(room.getMahopdong() != null){
                     hopdongctrl.deleteHopDong(txtMahopdong.getText());
+                    String them="Trống";
+                    roomController.updateRoomStatus(room, them);
                     Home_Form a=new Home_Form();
                 a.setVisible(true);
                 this.dispose();
@@ -697,6 +714,7 @@ public class HopDong_Form extends javax.swing.JFrame {
             public void run() {
                 new HopDong_Form().setVisible(true);
             }
+            
         });
     }
     
@@ -710,7 +728,7 @@ public class HopDong_Form extends javax.swing.JFrame {
     return false; // Không tìm thấy mã phòng trong danh sách
 }
     
-    public  HopDong getDataForm() {
+public  HopDong getDataForm() {
     String mahopdong = txtMahopdong.getText().toString();
     String tenkhachhang = txtTenkhachhang.getText().toString();
 
@@ -742,7 +760,7 @@ public class HopDong_Form extends javax.swing.JFrame {
 }
 
     
-    public void roomHasContract(Room room){
+public void roomHasContract(Room room){
         if(room.getMahopdong()!= null){
         displayDataFromDatabase(room.getMaPhong());
         }else{
@@ -757,35 +775,55 @@ public class HopDong_Form extends javax.swing.JFrame {
         }
     }
   
-    private boolean checkEmpty() {
+private boolean checkEmpty() {
     String mahopdong = txtMahopdong.getText().trim();
     String tenkhachhang = txtTenkhachhang.getText().trim();
+    // Lấy giá trị ngày từ JCalendar
+    Date ngayKi = dteNgayki.getDate();
+    Date ngayHetHan = dteNgayhethan.getDate();
 
     String sdt = txtSdt.getText().trim();
     String cccd = txtCccd.getText().trim();
     String email = txtEmail.getText().trim();
     String diachi = txtDiachi.getText().trim();
     String tiencocStr = txtTiencoc.getText().trim();
-    
-    String giadienStr = txtGiadien.getText().trim();
-    String gianuocStr = txtGianuoc.getText().trim();
-    String selected = cboDichvu.getSelectedItem().toString();
-    String madichvu = DichVuMap.get(selected);
 
-    
+    // Lấy giá trị của RadioButton đã được chọn
+    ButtonModel selectedButtonModel1 = buttonGroup1.getSelection();
+    ButtonModel selectedButtonModel2 = buttonGroup2.getSelection();
+
     // Kiểm tra từng trường một
-    if (mahopdong.isEmpty() || tenkhachhang.isEmpty()  || sdt.isEmpty() || cccd.isEmpty() || 
-            email.isEmpty() || diachi.isEmpty() || tiencocStr.isEmpty() ||  giadienStr.isEmpty() || 
-            gianuocStr.isEmpty() || madichvu.isEmpty() ) {
+    if (mahopdong.isEmpty() || tenkhachhang.isEmpty() || sdt.isEmpty() || cccd.isEmpty() ||
+            email.isEmpty() || diachi.isEmpty() || tiencocStr.isEmpty() || ngayKi == null || 
+            ngayHetHan == null || selectedButtonModel1 == null || selectedButtonModel2 == null) {
         JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return false; // Trường nào đó rỗng, không hợp lệ
     }
-    
+
     // Kiểm tra dữ liệu có hợp lệ không (ví dụ: kiểm tra định dạng số điện thoại, email, ngày sinh...)
     // Bạn có thể thêm các điều kiện kiểm tra ở đây
-    
+
     return true; // Tất cả trường đều không rỗng và hợp lệ
 }
+
+public void AllowNumber() {
+        AbstractDocument doc1 = (AbstractDocument) txtCccd.getDocument();
+    doc1.setDocumentFilter(new CustomDocumentFilter());
+
+    AbstractDocument doc2 = (AbstractDocument) txtSdt.getDocument();
+    doc2.setDocumentFilter(new CustomDocumentFilter());
+
+    AbstractDocument doc3 = (AbstractDocument) txtTiencoc.getDocument();
+    doc3.setDocumentFilter(new CustomDocumentFilter());
+
+    AbstractDocument doc4 = (AbstractDocument) txtGiadien.getDocument();
+    doc4.setDocumentFilter(new CustomDocumentFilter());
+
+    AbstractDocument doc5 = (AbstractDocument) txtGianuoc.getDocument();
+    doc5.setDocumentFilter(new CustomDocumentFilter());
+ 
+}
+
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables

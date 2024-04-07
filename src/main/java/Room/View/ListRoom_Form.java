@@ -295,6 +295,13 @@ public class ListRoom_Form extends javax.swing.JFrame {
         String mota=txtMota.getText();
         int tang = Integer.parseInt(txtTang.getText());
         String trangthai=(String) cboTrangthai.getSelectedItem();
+        
+        if(txtMahopdong.getText().equals("Chưa tạo hợp đồng")){
+         if(trangthai.equals("Đang sử dụng")){
+            JOptionPane.showMessageDialog(this, "Phòng chưa có hợp đồng vui lòng đặt thành trống", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }
+        }
         String selected = cboLoaiphong.getSelectedItem().toString();
         int loai = loaiPhongMap.get(selected);
         Room room =new Room(maphong,loai,mota,trangthai,tang);

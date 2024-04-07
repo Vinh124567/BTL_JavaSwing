@@ -4,6 +4,7 @@
  */
 package Room.View;
 
+import Home.View.Home_Page;
 import HopDong.View.HopDong_Form;
 import Room.Controller.Room_Controller;
 import java.awt.BorderLayout;
@@ -176,6 +177,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         txtTenphong = new javax.swing.JTextField();
         btnLammoi = new javax.swing.JButton();
         btnDanhsachphong = new javax.swing.JButton();
+        btnBack = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -223,7 +225,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
 
         jLabel5.setText("Trạng thái");
 
-        cboTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Đang sử dụng", "Trống", "Đang sửa" }));
+        cboTrangthai.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "Trống", "Đang sử dụng", "Đang sửa" }));
 
         btnThem.setText("Thêm");
         btnThem.addActionListener(new java.awt.event.ActionListener() {
@@ -331,7 +333,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
                         .addComponent(productPanel, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                     .addGroup(jPanel3Layout.createSequentialGroup()
                         .addGap(16, 16, 16)
-                        .addComponent(btnDanhsachphong, javax.swing.GroupLayout.DEFAULT_SIZE, 44, Short.MAX_VALUE)
+                        .addComponent(btnDanhsachphong, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addGap(18, 18, 18)
                         .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
@@ -341,17 +343,33 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
 
         jTabbedPane1.addTab("Quản lý phòng", jPanel3);
 
+        btnBack.setText("Back");
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jTabbedPane1))
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jTabbedPane1)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(btnBack)
+                        .addGap(0, 0, Short.MAX_VALUE))))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addComponent(jTabbedPane1)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
+                .addComponent(btnBack)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addComponent(jTabbedPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 581, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(20, 20, 20))
         );
 
         pack();
@@ -371,6 +389,10 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
         int tang = Integer.parseInt(cboTang.getSelectedItem().toString());
         String mota = txtMota.getText().toString();
         String trangthai = cboTrangthai.getSelectedItem().toString();
+        if(trangthai.equals("Đang sử dụng")){
+            JOptionPane.showMessageDialog(this, "Phòng chưa có hợp đồng vui lòng đặt thành trống", "Thông báo", JOptionPane.ERROR_MESSAGE);
+            return;
+        }else{
         if (name.isEmpty() || mota.isEmpty()) {
             JOptionPane.showMessageDialog(this, "Vui lòng điền đầy đủ thông tin", "Thông báo", JOptionPane.ERROR_MESSAGE);
             return; // Nếu có trường nào rỗng thì dừng lại và không thêm phòng mới
@@ -389,6 +411,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
             JOptionPane.showMessageDialog(this, "Tên phòng đã tồn tại", "Thông báo", JOptionPane.ERROR_MESSAGE);
             return;
         }
+        }
     }//GEN-LAST:event_btnThemActionPerformed
 
     private void btnDanhsachphongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDanhsachphongActionPerformed
@@ -396,6 +419,12 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
          listroom_Form.setVisible(true);
          this.dispose();
     }//GEN-LAST:event_btnDanhsachphongActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        Home_Page homepage=new Home_Page();
+             homepage.setVisible(true);
+             this.dispose();
+    }//GEN-LAST:event_btnBackActionPerformed
     
     public void loadData(){
                 productPanel.removeAll();
@@ -440,6 +469,7 @@ public boolean kiemTraTrungMaPhong(String maPhong, List<Room> danhSachPhong) {
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnBack;
     private javax.swing.JButton btnDanhsachphong;
     private javax.swing.JButton btnLammoi;
     private javax.swing.JButton btnThem;
