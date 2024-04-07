@@ -347,10 +347,9 @@ public class DichVu_Form extends javax.swing.JFrame {
     
    
     
-     public void clear(){
+    public void clear(){
          txtId.setText("");
          txtTengoi.setText("");
-         
          txtMota.setText("");
         AbstractDocument doc = (AbstractDocument) txtGia.getDocument();
         doc.setDocumentFilter(null); // Gỡ bỏ bộ lọc hiện tại
@@ -367,7 +366,7 @@ public class DichVu_Form extends javax.swing.JFrame {
          return a;
      }
     
-     public void loadDatatable(){
+    public void loadDatatable(){
          
         dichvus=dichvuCtrl.getDichVu();
         model = (DefaultTableModel) tblDichvu.getModel();
@@ -381,11 +380,12 @@ public class DichVu_Form extends javax.swing.JFrame {
      
    
 public void AllowNumber() {
-   
     AbstractDocument doc5 = (AbstractDocument) txtGia.getDocument();
     doc5.setDocumentFilter(new CustomDocumentFilter());
  
 }
+
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnLammoi;

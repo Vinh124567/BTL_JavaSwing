@@ -65,7 +65,6 @@ public HoaDon getHoaDonById(String id) {
     return hoadon;
 }
 
-
 public boolean addHoaDon(HoaDon hoadon) {
     Connection conn = getConnection();
     if (conn != null) {
@@ -99,7 +98,7 @@ public boolean addHoaDon(HoaDon hoadon) {
     }
 }
 
-public ResultSet getInfoRoom(String id) {
+public ResultSet getDetailRoomById(String id) {
     Connection conn = getConnection();
     ResultSet resultSet = null;
     try {
@@ -165,7 +164,61 @@ public ArrayList<HoaDon> getAllHoaDon(String id) {
     return listHoaDon;
 }
 
+ public boolean deletehoaDon(String id){
+        Connection conn = getConnection();
+        if (conn != null) {
+            String query = "DELETE FROM hoadon WHERE mahoadon = ?";
+            try (PreparedStatement psmt = conn.prepareStatement(query)) {
+                // Thiết lập giá trị tham số cho câu lệnh SQL
+                psmt.setString(1, id);
+                int rowsDeleted = psmt.executeUpdate(); // Thực thi truy vấn xóa
 
+                // Kiểm tra xem có dòng nào đã bị xóa không
+                if (rowsDeleted > 0) {
+                    System.out.println("Xóa hóa đơn thành công .");
+                    return true; // Trả về true nếu xóa thành công
+                } else {
+                    System.out.println("Không tìm thấy hóa đơn cần xóa.");
+                }
+            } catch (SQLException e) {
+                System.out.println("Lỗi : " + e.getMessage());
+            }
+        } else {
+            System.out.println("Kết nối CSDL thất bại .");
+        }
+        return false; // Trả về false nếu xóa không thành công
+    }
+    
+ public boolean updateHoaDon(HoaDon hoadon) {
+    Connection conn = getConnection();
+    if (conn != null) {
+        String query = "UPDATE hoadon SET  mahoadon = ? , ngaytao=? ,  dien= ?, nuoc = ?, tongtien = ? , trangthai=? WHERE mahoadon = ?";
+        try (PreparedStatement psmt = conn.prepareStatement(query)) {
+            // Thiết lập giá trị tham số cho câu lệnh SQL
+            psmt.setString(1, hoadon.getMahoadon());
+            psmt.setDate(2, new java.sql.Date(hoadon.getNgaytao().getTime()));
+            psmt.setInt(3, hoadon.getDien());
+            psmt.setInt(4, hoadon.getNuoc());
+            psmt.setInt(5,hoadon.getTongtien());
+            psmt.setString(6,hoadon.getTrangthai());
+            psmt.setString(7,hoadon.getMahoadon());
+            int rowsUpdated = psmt.executeUpdate(); // Thực thi truy vấn cập nhật
+
+            // Kiểm tra xem có bao nhiêu dòng đã được cập nhật
+            if (rowsUpdated > 0) {
+                System.out.println("Cập nhập hóa đơn thành công.");
+                return true; // Trả về true nếu cập nhật thành công
+            } else {
+                System.out.println("Cập nhập hóa đơn thất bại.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Lỗi khi cập nhập hóa đơn: " + e.getMessage());
+        }
+    } else {
+        System.out.println("Kết nối CSDL thất bại.");
+    }
+    return false; // Trả về false nếu cập nhật không thành công
+}
 
 
 }

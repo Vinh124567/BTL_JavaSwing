@@ -49,7 +49,6 @@ public class HopDong_Form extends javax.swing.JFrame {
     
     public HopDong_Form(Room room) {
         initComponents();
-        
         Calendar currentDate = Calendar.getInstance();
         dteNgayki.setCalendar(currentDate);
         AllowNumber();
@@ -323,17 +322,16 @@ public class HopDong_Form extends javax.swing.JFrame {
                     .addComponent(jLabel18)))
             .addGroup(jPanel1Layout.createSequentialGroup()
                 .addGap(107, 107, 107)
-                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
-                        .addGroup(jPanel1Layout.createSequentialGroup()
-                            .addComponent(btnThem)
-                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                            .addComponent(btnKetthuc))
-                        .addComponent(dteNgayhethan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+                .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                    .addGroup(jPanel1Layout.createSequentialGroup()
+                        .addComponent(btnThem)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(btnKetthuc))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addComponent(rdoConhan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                        .addComponent(rdoHethan, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(dteNgayhethan, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
         );
         jPanel1Layout.setVerticalGroup(
@@ -483,9 +481,8 @@ public class HopDong_Form extends javax.swing.JFrame {
         jPanel4Layout.setVerticalGroup(
             jPanel4Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel4Layout.createSequentialGroup()
-                .addContainerGap(7, Short.MAX_VALUE)
-                .addComponent(btnTrolai, javax.swing.GroupLayout.PREFERRED_SIZE, 17, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap())
+                .addGap(0, 7, Short.MAX_VALUE)
+                .addComponent(btnTrolai, javax.swing.GroupLayout.PREFERRED_SIZE, 23, javax.swing.GroupLayout.PREFERRED_SIZE))
         );
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
@@ -576,16 +573,11 @@ public class HopDong_Form extends javax.swing.JFrame {
                 String tang=resultSet.getString("tang");
                 txtTang.setText(tang);
                 int tiencoc = resultSet.getInt("tiencoc");
-                txtTiencoc.setText(Integer.toString(tiencoc));
-                
-                
-                
+                txtTiencoc.setText(Integer.toString(tiencoc));  
                 Date ngayKi = resultSet.getDate("ngayki");
                 dteNgayki.setDate(ngayKi);
                 Date ngayHetHan = resultSet.getDate("ngayhethan");
                 dteNgayhethan.setDate(ngayHetHan);
-               
-                
                 String trangthai = resultSet.getString("trangthai");
                 if (trangthai.equalsIgnoreCase("Còn hạn")) {
                     rdoConhan.setSelected(true);
@@ -601,29 +593,21 @@ public class HopDong_Form extends javax.swing.JFrame {
                 String tenloaiphong = resultSet.getString("tenloaiphong");
                 txtLoaiphong.setText(tenloaiphong);
                 String tengoidichvu=resultSet.getString("tengoidichvu");
-                 btnKetthuc.setVisible(true);
-                 btnThem.setVisible(false);
+                btnKetthuc.setVisible(true);
+                btnThem.setVisible(false);
                 
-                 //
                 Date ngayHienTai = new Date(); // Ngày hiện tại
                 if (ngayHetHan.before(ngayHienTai)) {
                     rdoHethan.setSelected(true);
                 }
-
-                //
-                
                 for (int i = 0; i < cboDichvu.getItemCount(); i++) {
                     if (cboDichvu.getItemAt(i).equals(tengoidichvu)) { // So sánh giá trị từ cơ sở dữ liệu với từng mục trong combobox
                         cboDichvu.setSelectedIndex(i); // Chọn mục trong combobox nếu có sự khớp
                         break; // Thoát khỏi vòng lặp sau khi tìm thấy sự khớp
                     }
                 }
-                
                 int giaphong = resultSet.getInt("giaphong");
                 txtGiaphong.setText(Integer.toString(giaphong));
-                
-
-
             }
         } catch (SQLException e) {
             e.printStackTrace();
@@ -657,16 +641,23 @@ public class HopDong_Form extends javax.swing.JFrame {
     }//GEN-LAST:event_btnTrolaiActionPerformed
 
     private void btnKetthucActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnKetthucActionPerformed
+        
         int dialogResult = JOptionPane.showConfirmDialog(null, "Bạn có chắc chắn muốn kết thúc hợp đồng?", "Xác nhận ", JOptionPane.YES_NO_OPTION);
             if (dialogResult == JOptionPane.YES_OPTION) {
-                if(room.getMahopdong() != null){
+                if(hopdongctrl.checkQueryResult(txtMahopdong.getText())==true){
+                    JOptionPane.showMessageDialog(this, "Không thể xóa! còn hóa đơn chưa thanh toán", "Thông báo", JOptionPane.INFORMATION_MESSAGE);
+                    return;
+                }else{
+                    if(room.getMahopdong() != null){
                     hopdongctrl.deleteHopDong(txtMahopdong.getText());
                     String them="Trống";
                     roomController.updateRoomStatus(room, them);
                     Home_Form a=new Home_Form();
-                a.setVisible(true);
-                this.dispose();
+                    a.setVisible(true);
+                    this.dispose();
                 }
+                }
+                
             } 
     }//GEN-LAST:event_btnKetthucActionPerformed
 
@@ -733,7 +724,7 @@ public class HopDong_Form extends javax.swing.JFrame {
     return false; // Không tìm thấy mã phòng trong danh sách
 }
     
-public  HopDong getDataForm() {
+    public  HopDong getDataForm() {
     String mahopdong = txtMahopdong.getText().toString();
     String tenkhachhang = txtTenkhachhang.getText().toString();
 
@@ -744,7 +735,6 @@ public  HopDong getDataForm() {
     String email = txtEmail.getText().toString();
     String diachi = txtDiachi.getText().toString();
     int tiencoc = Integer.parseInt(txtTiencoc.getText().toString());
-
     Date ngayki = dteNgayki.getDate();
     Date ngayhethan = dteNgayhethan.getDate();
 
@@ -753,7 +743,6 @@ public  HopDong getDataForm() {
     String selected = cboDichvu.getSelectedItem().toString();
     String madichvu = DichVuMap.get(selected);
 
-    // Kiểm tra nếu ngày kí lớn hơn hoặc bằng ngày hết hạn
     if (ngayki.compareTo(ngayhethan) >= 0) {
         JOptionPane.showMessageDialog(null, "Ngày kí phải trước ngày hết hạn", "Lỗi", JOptionPane.ERROR_MESSAGE);
         return null; // Trả về null nếu có lỗi
@@ -764,8 +753,7 @@ public  HopDong getDataForm() {
     return hopdong;
 }
 
-    
-public void roomHasContract(Room room){
+    public void roomHasContract(Room room){
         if(room.getMahopdong()!= null){
         displayDataFromDatabase(room.getMaPhong());
         }else{
@@ -780,7 +768,7 @@ public void roomHasContract(Room room){
         }
     }
   
-private boolean checkEmpty() {
+    private boolean checkEmpty() {
     String mahopdong = txtMahopdong.getText().trim();
     String tenkhachhang = txtTenkhachhang.getText().trim();
     // Lấy giá trị ngày từ JCalendar
@@ -811,8 +799,8 @@ private boolean checkEmpty() {
     return true; // Tất cả trường đều không rỗng và hợp lệ
 }
 
-public void AllowNumber() {
-        AbstractDocument doc1 = (AbstractDocument) txtCccd.getDocument();
+    public void AllowNumber() {
+    AbstractDocument doc1 = (AbstractDocument) txtCccd.getDocument();
     doc1.setDocumentFilter(new CustomDocumentFilter());
 
     AbstractDocument doc2 = (AbstractDocument) txtSdt.getDocument();

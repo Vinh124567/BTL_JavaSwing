@@ -18,7 +18,7 @@ import model.Room;
  */
 public class Room_Controller extends ConnectDB {
     
-    public boolean addRoom(Room room) {
+ public boolean addRoom(Room room) {
     Connection conn = getConnection();
     if (conn != null) {
         String query = "INSERT INTO phong(maphong, loaiphong, mota, trangthai, tang) "
@@ -79,7 +79,7 @@ public class Room_Controller extends ConnectDB {
         return listRoom;
     }
     
-    public boolean deleteRoom(String id) {
+ public boolean deleteRoom(String id) {
         Connection conn = getConnection();
         if (conn != null) {
             String query = "DELETE FROM phong WHERE maphong = ?";
@@ -104,7 +104,7 @@ public class Room_Controller extends ConnectDB {
         return false; // Trả về false nếu xóa không thành công
     }
     
-    public boolean updateRoom(Room room) {
+ public boolean updateRoom(Room room) {
     Connection conn = getConnection();
     if (conn != null) {
         String query = "UPDATE phong SET  loaiphong = ?, mota = ?, trangthai = ?, tang = ? WHERE maphong = ?";
@@ -133,7 +133,7 @@ public class Room_Controller extends ConnectDB {
     return false; // Trả về false nếu cập nhật không thành công
 }
     
-    public boolean updateRoomStatus(Room room,String trangthai){
+ public boolean updateRoomStatus(Room room,String trangthai){
     Connection conn = getConnection();
     if (conn != null) {
         String query = "UPDATE phong SET  trangthai = ? WHERE maphong = ?";

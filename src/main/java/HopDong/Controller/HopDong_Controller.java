@@ -148,6 +148,25 @@ public boolean addHopDong(HopDong hopdong,String maphong) {
         }
         return false; // Trả về false nếu xóa không thành công
     }
+    
+   public boolean checkQueryResult(String id) {
+    Connection conn = getConnection();
+    String query = "SELECT * FROM hopdong "
+            + "INNER JOIN hoadon ON hopdong.mahopdong = hoadon.mahopdong "
+            + "WHERE hopdong.mahopdong = ? and hoadon.trangthai='Chưa thanh toán'";
+    try (PreparedStatement psmt = conn.prepareStatement(query)) {
+        psmt.setString(1, id);
+        try (ResultSet resultSet = psmt.executeQuery()) {
+            if (resultSet.next()) {
+                return true; 
+            }
+        }
+    } catch (SQLException e) {
+        e.printStackTrace();
+    }
+    return false; 
+}
+
 
 }
 
