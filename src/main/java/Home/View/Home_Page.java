@@ -1,12 +1,15 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
+ * Click nbfs://nbhost    /SystemFileSystem/Templates/GUIForms/JFrame.java to edit this template
  */
 package Home.View;
 
 import DichVu.View.DichVu_Form;
 import HoaDon.View.HoaDon_Form;
 import HoaDon.View.ListHoaDon_Form;
+import HopDong.View.HopDong_Form;
+import HopDong.View.ListHopDong_Form;
+import Login.View.Login_Form;
 import Room.View.Home_Form;
 import loaiphong.View.LoaiPhong_Form;
 
@@ -41,12 +44,18 @@ public class Home_Page extends javax.swing.JFrame {
         btnLoaiphong = new javax.swing.JButton();
         jPanel2 = new javax.swing.JPanel();
         jLabel1 = new javax.swing.JLabel();
+        txtdangxuat = new javax.swing.JButton();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Chức năng"));
 
         txtHopdong.setText("Hợp đồng");
+        txtHopdong.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtHopdongActionPerformed(evt);
+            }
+        });
 
         txtPhong.setText("Quản lý phòng");
         txtPhong.addActionListener(new java.awt.event.ActionListener() {
@@ -126,33 +135,44 @@ public class Home_Page extends javax.swing.JFrame {
         );
         jPanel2Layout.setVerticalGroup(
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(jPanel2Layout.createSequentialGroup()
-                .addGap(33, 33, 33)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel2Layout.createSequentialGroup()
+                .addContainerGap(28, Short.MAX_VALUE)
                 .addComponent(jLabel1)
-                .addContainerGap(39, Short.MAX_VALUE))
+                .addGap(26, 26, 26))
         );
+
+        txtdangxuat.setText("Đăng Xuất");
+        txtdangxuat.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtdangxuatActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addGap(100, 100, 100)
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(141, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(txtdangxuat)
+                        .addGap(19, 19, 19)
+                        .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 103, Short.MAX_VALUE))
+                    .addComponent(jPanel1, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                 .addContainerGap())
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap()
-                .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                .addGap(12, 12, 12)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(jPanel2, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(txtdangxuat))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jPanel1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                .addContainerGap(29, Short.MAX_VALUE))
+                .addContainerGap(252, Short.MAX_VALUE))
         );
 
         pack();
@@ -182,15 +202,28 @@ public class Home_Page extends javax.swing.JFrame {
        this.dispose();
     }//GEN-LAST:event_btnHoadonActionPerformed
 
-    
-    public static void main(String args[]) {
-       
-        java.awt.EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                new Home_Page().setVisible(true);
-            }
-        });
-    }
+    private void txtHopdongActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtHopdongActionPerformed
+        ListHopDong_Form hopdongform=new ListHopDong_Form();
+        hopdongform.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_txtHopdongActionPerformed
+
+    private void txtdangxuatActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtdangxuatActionPerformed
+        // TODO add your handling code here:
+        Login_Form loginform=new Login_Form();
+        loginform.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_txtdangxuatActionPerformed
+//int value = Integer.parseInt(input.replaceAll("[^0-9]", ""));
+//    
+//    public static void main(String args[]) {
+//       
+//        java.awt.EventQueue.invokeLater(new Runnable() {
+//            public void run() {
+//                new Home_Page().setVisible(true);
+//            }
+//        });
+//    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnHoadon;
@@ -201,5 +234,6 @@ public class Home_Page extends javax.swing.JFrame {
     private javax.swing.JButton txtDichvu;
     private javax.swing.JButton txtHopdong;
     private javax.swing.JButton txtPhong;
+    private javax.swing.JButton txtdangxuat;
     // End of variables declaration//GEN-END:variables
 }

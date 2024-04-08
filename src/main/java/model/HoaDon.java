@@ -24,7 +24,7 @@ public class HoaDon {
     int nuoc;
     String trangthai;
 
-    public HoaDon(String mahoadon, String mahopdong, Date ngaytao, int tongtien, int dien, int nuoc, String trangthai) {
+    public HoaDon(String mahoadon, String mahopdong, Date ngaytao,  int dien, int nuoc,int tongtien, String trangthai) {
         this.mahoadon = mahoadon;
         this.mahopdong = mahopdong;
         this.ngaytao = ngaytao;

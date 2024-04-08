@@ -83,12 +83,12 @@ public class DichVu_Controller extends ConnectDB {
             psmt.setString(4,dichvu.getId());
 
           
-            int rowsUpdated = psmt.executeUpdate(); // Thực thi truy vấn cập nhật
+            int rowsUpdated = psmt.executeUpdate(); 
 
-            // Kiểm tra xem có bao nhiêu dòng đã được cập nhật
+
             if (rowsUpdated > 0) {
                 System.out.println("Cập nhập dịch vụ thành công.");
-                return true; // Trả về true nếu cập nhật thành công
+                return true; 
             } else {
                 System.out.println("Không tìm thấy dịch vụ để cập nhập.");
             }
@@ -98,7 +98,7 @@ public class DichVu_Controller extends ConnectDB {
     } else {
         System.out.println("Kết nối đến database thất bại.");
     }
-    return false; // Trả về false nếu cập nhật không thành công
+    return false; 
     }
     
     public Boolean insertDichVu(DichVu dichvu){
@@ -107,13 +107,11 @@ public class DichVu_Controller extends ConnectDB {
         String query = "INSERT INTO dichvu(id,tengoi,gia,mota) "
                      + "VALUES (?,?, ?,?)";
         try (PreparedStatement psmt = conn.prepareStatement(query)) {
-            // Thiết lập các tham số cho câu lệnh INSERT
             psmt.setString(1,dichvu.getId());
             psmt.setString(2,dichvu.getTengoi());
             psmt.setInt(3,dichvu.getGia());
             psmt.setString(4,dichvu.getMota());
 
-            // Thực hiện câu lệnh INSERT
             int rowsInserted = psmt.executeUpdate();
             if (rowsInserted > 0) {
                 System.out.println("Thêm dịch vụ thành công.");
@@ -124,11 +122,11 @@ public class DichVu_Controller extends ConnectDB {
             }
         } catch (SQLException e) {
             System.out.println("Lỗi trong khi thêm dịch vụ: " + e.getMessage());
-            return false; // Trả về false nếu có lỗi xảy ra
+            return false; 
         }
     } else {
         System.out.println("Lỗi khi kết nối tới CSDL.");
-        return false; // Trả về false nếu không thể kết nối đến cơ sở dữ liệu
+        return false; 
     }
     }
     
@@ -141,7 +139,6 @@ public class DichVu_Controller extends ConnectDB {
                 psmt.setString(1,id);
                 int rowsDeleted = psmt.executeUpdate(); // Thực thi truy vấn xóa
 
-                // Kiểm tra xem có dòng nào đã bị xóa không
                 if (rowsDeleted > 0) {
                     System.out.println("Xóa thành công.");
                     return true; // Trả về true nếu xóa thành công
@@ -154,7 +151,7 @@ public class DichVu_Controller extends ConnectDB {
         } else {
             System.out.println("Lỗi kết nối tới CSDL.");
         }
-        return false; // Trả về false nếu xóa không thành công
+        return false; 
     }
 
     
